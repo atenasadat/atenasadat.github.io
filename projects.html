@@ -10,7 +10,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Baskervville:ital@0;1&display=swap">
 <link rel="stylesheet" href="assets/site.css">
 <style>
-/* Projects: a simple grid of cards, each with a small sketch, the question, and a short summary. */
+/* Projects: a simple grid of cards, each with an image, the question, a short summary, and a link to the paper when published.
+   To add an image to a card, put the file in assets/projects/ and add img:'assets/projects/NAME.jpg' to that project below. */
 .intro{padding:clamp(40px,7vw,90px) 0 clamp(28px,4vw,44px)}
 .intro h1{margin:0 0 14px;font-weight:300;font-size:clamp(40px,6vw,72px);letter-spacing:-.02em;line-height:1}
 .intro p{margin:0;max-width:36em;color:var(--soft);font-size:19px}
@@ -26,7 +27,11 @@
 .sheet:target{border-color:var(--accent)}
 .sheet[hidden]{display:none}
 .sheet header{display:flex;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--faint)}
-.sheet canvas{display:block;width:100%;height:130px;margin:14px 0 12px}
+.sheet .ph{display:grid;place-items:center;width:100%;aspect-ratio:16/9;margin:14px 0 16px;border-radius:4px;border:1px solid var(--line);object-fit:cover;
+  background:repeating-linear-gradient(135deg,rgba(43,50,64,.035) 0 10px,transparent 10px 20px),rgba(250,248,244,.6)}
+.sheet .ph span{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.sheet .paper{display:inline-flex;gap:6px;margin-top:14px;font-size:13px;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:1px}
+.sheet .paper:hover{color:var(--accent)}
 .sheet h2{margin:0 0 10px;font-weight:400;font-size:21px;line-height:1.25;letter-spacing:-.005em}
 .sheet .q{margin:0 0 12px;font-size:18px;line-height:1.4;color:var(--ink)}
 .sheet p.d{margin:0 0 14px;font-size:15px;line-height:1.6;color:var(--soft)}
@@ -69,33 +74,33 @@
 const ME='<b>Saghi, Z.</b>';
 const GROUPS={1:'How people work with AI',2:'How AI changes the mind',3:'Aligning AI with human cognition',0:'Earlier work'};
 const P=[
- {id:'biases',g:1,sk:'code',ven:'ICSE 2026',t:'Cognitive biases in LLM-assisted software development',q:'Do LLM assistants make developers’ cognitive biases louder?',
+ {id:'biases',g:1,url:'https://arxiv.org/abs/2601.08045',ven:'ICSE 2026',t:'Cognitive biases in LLM-assisted software development',q:'Do LLM assistants make developers’ cognitive biases louder?',
   d:'Mixed-methods and controlled observational studies of developers working with LLM assistants, measuring critical thinking, cognitive load and how existing biases get amplified.',tags:['mixed methods','observational study','cognitive bias'],au:ME+', Zhou, X., Sabouri, S., Pandita, R., McGuire, M., & Chattopadhyay, S.'},
- {id:'mentalmodels',g:1,sk:'split',ven:'Under review',t:'“Do as I say, not as I code?”',q:'Why do developers describe AI one way and use it another?',
+ {id:'mentalmodels',g:1,ven:'Under review',t:'“Do as I say, not as I code?”',q:'Why do developers describe AI one way and use it another?',
   d:'How developers’ mental models of AI diverge from their actual practice, and what that gap means for the design of coding assistants.',tags:['interviews','mental models','programming'],au:ME+', & Chattopadhyay, S.'},
- {id:'paperreading',g:1,sk:'paper',ven:'UIST 2025',t:'Beyond the page',q:'What if a research paper came with the conversation around it?',
+ {id:'paperreading',g:1,url:'https://aceatusc.github.io/surf',ven:'UIST 2025',t:'Beyond the page',q:'What if a research paper came with the conversation around it?',
   d:'A reading system that enriches academic papers with social media discussions, placing community commentary next to the passages it is about.',tags:['system','reading','UIST'],au:'Huang, R., Zhao, A. K., '+ME+', Sabouri, S., & Chattopadhyay, S.'},
- {id:'spreadsheets',g:1,sk:'grid',ven:'Under review',t:'Auditing and controlling AI agent actions in spreadsheets',q:'How do people stay in control when an agent edits their data?',
+ {id:'spreadsheets',g:1,ven:'Under review',t:'Auditing and controlling AI agent actions in spreadsheets',q:'How do people stay in control when an agent edits their data?',
   d:'Tools for auditing and steering what an AI agent does inside a spreadsheet, so users can see, check and undo its actions.',tags:['agents','end-user programming','control'],au:'Sabouri, S., '+ME+', Huang, R., Maladi, S., Eufracio, E., Gulwani, S., & Chattopadhyay, S.'},
- {id:'creativecode',g:2,sk:'paths',ven:'Under revision',t:'“Like taking the path of least resistance”',q:'Does autocomplete pull programmers onto the path of least resistance?',
+ {id:'creativecode',g:2,ven:'Under revision',t:'“Like taking the path of least resistance”',q:'Does autocomplete pull programmers onto the path of least resistance?',
   d:'How interacting with LLMs changes the creative process of programming: which ideas get explored, and which ones never get written.',tags:['creativity','think-aloud','programming'],au:ME+', Huang, R., & Chattopadhyay, S.'},
- {id:'genai',g:2,sk:'connect',ven:'In submission',t:'Generative AI and brain connectivity',q:'Does working with generative AI change how the brain connects during creative work?',
+ {id:'genai',g:2,ven:'In submission',t:'Generative AI and brain connectivity',q:'Does working with generative AI change how the brain connects during creative work?',
   d:'Within-subject EEG studies with a wearable DSI-24 headset, quantifying how generative AI use alters functional brain connectivity during creative and cognitive tasks.',tags:['EEG','DSI-24','within-subject'],au:ME+' et al.'},
- {id:'flow',g:2,sk:'eeg',ven:'Ongoing',t:'Neural signatures of creative flow',q:'Can we predict creative flow from neural signals, and protect it?',
+ {id:'flow',g:2,ven:'Ongoing',t:'Neural signatures of creative flow',q:'Can we predict creative flow from neural signals, and protect it?',
   d:'Predictive models of creativity-related neural signatures, built to time real-time interventions that sustain engagement and creative flow.',tags:['EEG','prediction','creativity'],au:ME+' et al.'},
- {id:'thinkaloud',g:3,sk:'speech',ven:'Under review',t:'Surfacing latent reasoning gaps',q:'Can an agent hear the gap in someone’s reasoning and nudge at the right moment?',
+ {id:'thinkaloud',g:3,ven:'Under review',t:'Surfacing latent reasoning gaps',q:'Can an agent hear the gap in someone’s reasoning and nudge at the right moment?',
   d:'A real-time agentic system that ingests think-aloud speech while people write, monitors their reasoning, predicts gaps and delivers contextualized nudges.',tags:['agentic AI','speech','writing'],au:ME+', Sanidhya, S., Jiang, H., & Chattopadhyay, S.'},
- {id:'fatigue',g:3,sk:'fractal',ven:'IEEE JBHI · under review',t:'Predicting cognitive fatigue from EEG',q:'Can EEG tell a system that a person is too fatigued to keep going?',
+ {id:'fatigue',g:3,ven:'IEEE JBHI · under review',t:'Predicting cognitive fatigue from EEG',q:'Can EEG tell a system that a person is too fatigued to keep going?',
   d:'A Fractional Dynamical Networks ML framework that models EEG as a non-Markovian system and predicts cognitive fatigue in real time with 93.33% accuracy and 0.95 AUROC.',tags:['EEG','dynamical systems','ML'],au:ME+', Riabukhina, D., Akinbami, O., Bogdan, P., & Chattopadhyay, S.'},
- {id:'autonomy',g:3,sk:'road',ven:'Ongoing',t:'Cognitive-aware shared autonomy',q:'When should a car take over from a driver who is not at their best?',
+ {id:'autonomy',g:3,ven:'Ongoing',t:'Cognitive-aware shared autonomy',q:'When should a car take over from a driver who is not at their best?',
   d:'A shared-autonomy system formalized as a multi-agent POMDP that models the user’s cognitive impairment and chooses control interventions, evaluated in semi-autonomous driving studies.',tags:['POMDP','human-in-the-loop','driving'],au:ME+' et al.'},
- {id:'engagement',g:3,sk:'multi',ven:'USC · 2024',t:'Detecting interpersonal engagement',q:'Can a system tell who in a conversation is actually engaged?',
+ {id:'engagement',g:3,ven:'USC · 2024',t:'Detecting interpersonal engagement',q:'Can a system tell who in a conversation is actually engaged?',
   d:'A multimodal engagement-prediction system fusing synchronized audio, video, behavioural and multi-party context signals, from preprocessing through training and evaluation.',tags:['multimodal ML','audio','video'],au:ME},
- {id:'procrastination',g:0,sk:'clock',ven:'ICSE 2025',t:'Code today, deadline tomorrow',q:'Why does the code wait until tomorrow?',
+ {id:'procrastination',g:0,url:'https://www.computer.org/csdl/proceedings-article/icse/2025/056900a735/251mHgxubJe',ven:'ICSE 2025',t:'Code today, deadline tomorrow',q:'Why does the code wait until tomorrow?',
   d:'A study of when and why software developers procrastinate, and what kind of support would actually help them start.',tags:['survey','interviews','developers'],au:ME+', Zimmermann, T., & Chattopadhyay, S.'},
- {id:'vr',g:0,sk:'vr',ven:'UC Davis · 2022–23',t:'Pedagogical agents in VR',q:'Can an autonomous agent teach STEM well at a distance?',
+ {id:'vr',g:0,ven:'UC Davis · 2022–23',t:'Pedagogical agents in VR',q:'Can an autonomous agent teach STEM well at a distance?',
   d:'A custom Unity VR application for Meta Quest 2 to study autonomous pedagogical agents in distance STEM learning, including the environment, interaction logging and study protocol.',tags:['Unity','VR','learning'],au:'Motion Capture Lab, UC Davis'},
- {id:'attention',g:0,sk:'gaze',ven:'Sharif · 2021–22',t:'EEG and gaze for visual attention',q:'Can brain signals and gaze together predict where attention goes?',
+ {id:'attention',g:0,ven:'Sharif · 2021–22',t:'EEG and gaze for visual attention',q:'Can brain signals and gaze together predict where attention goes?',
   d:'RNNs and attention-based autoencoders for representation learning on EEG, fused with gaze estimation on the SEED dataset for integrated attention prediction.',tags:['EEG','gaze','representation learning'],au:'DML Lab, Sharif University of Technology'},
 ];
 const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -105,9 +110,9 @@ for(const p of P){if(p.g!==last){html+=`<div class="group-note" data-g="${p.g}">
   i++;
   html+=`<article class="sheet" id="${p.id}" data-g="${p.g}">
   <header><span>${p.g?'00'+p.g:'000'} · ${String(i).padStart(2,'0')}</span><span>${esc(p.ven)}</span></header>
-  <canvas data-sk="${p.sk}" data-seed="${i}" aria-hidden="true"></canvas>
+  ${p.img?`<img class="ph" src="${p.img}" alt="">`:`<div class="ph" aria-hidden="true"><span>Image</span></div>`}
   <div class="body"><h2>${esc(p.t)}</h2><p class="q">${esc(p.q)}</p><p class="d">${esc(p.d)}</p>
-  <div class="tags">${p.tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div><p class="au">${p.au.replace(/&(?!amp;)/g,'&amp;')}</p></div></article>`}
+  <div class="tags">${p.tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div><p class="au">${p.au.replace(/&(?!amp;)/g,'&amp;')}</p>${p.url?`<a class="paper" href="${p.url}" target="_blank" rel="noopener">Read the paper <span aria-hidden="true">↗</span></a>`:''}</div></article>`}
 desk.innerHTML=html;
 
 // filters
@@ -115,62 +120,6 @@ const btns=[...document.querySelectorAll('.filters button')];
 btns.forEach(b=>b.addEventListener('click',()=>{btns.forEach(x=>x.setAttribute('aria-pressed',x===b));const f=b.dataset.f;
   desk.querySelectorAll('[data-g]').forEach(el=>el.hidden=!(f==='all'||el.dataset.g===f))}));
 
-/* ---------- pencil sketches, one per sheet, drawn once ---------- */
-function rng(seed){let s=(seed*2654435761)>>>0||1;return()=>{s^=s<<13;s>>>=0;s^=s>>>17;s^=s<<5;s>>>=0;return s/4294967296}}
-const TAU=Math.PI*2;
-function sketch(cv){const r=cv.getBoundingClientRect(),W=r.width,H=r.height;if(!W)return;const D=Math.min(2,devicePixelRatio||1);cv.width=W*D;cv.height=H*D;
-  const c=cv.getContext('2d');c.setTransform(D,0,0,D,0,0);c.lineCap='round';c.lineJoin='round';
-  const ink=getComputedStyle(document.documentElement).getPropertyValue('--ink-rgb').trim()||'36,33,30',R=rng(+cv.dataset.seed*97+5);
-  const st=(a,w=1)=>{c.strokeStyle=`rgba(${ink},${a})`;c.lineWidth=w},fi=a=>c.fillStyle=`rgba(${ink},${a})`;
-  // a pencil line: two slightly offset passes with a wobble
-  const pl=(pts,a=.7,w=1)=>{for(let k=0;k<2;k++){st(a*(k?.45:1),w*(k?.6:1));c.beginPath();pts.forEach((p,i)=>{const x=p[0]+(R()-.5)*.6*k,y=p[1]+(R()-.5)*.6*k;i?c.lineTo(x,y):c.moveTo(x,y)});c.stroke()}};
-  const dot=(x,y,rr,a=.7)=>{fi(a);c.beginPath();c.arc(x,y,rr,0,TAU);c.fill()};
-  const ring=(x,y,rr,a=.6,w=1)=>{st(a,w);c.beginPath();c.arc(x,y,rr,0,TAU);c.stroke()};
-  const wave=(y,amp,f,ph,x0=0,x1=W,noise=.3)=>{const p=[];for(let x=x0;x<=x1;x+=3)p.push([x,y+Math.sin(x*f+ph)*amp+Math.sin(x*f*2.7+ph*1.3)*amp*.4+(R()-.5)*amp*noise]);return p};
-  const k=cv.dataset.sk,cx=W/2,cy=H/2;
-  if(k==='code'){for(let i=0;i<7;i++){const y=14+i*16,ind=[0,1,1,2,2,1,0][i]*18;pl([[20+ind,y],[20+ind+40+R()*(W*.45),y]],.55,1.6)}
-    // a suggestion box that pushes on one line, its bias arrow
-    st(.6,1);c.setLineDash([3,3]);c.strokeRect(W*.52,40,W*.36,52);c.setLineDash([]);for(let i=0;i<3;i++)pl([[W*.55,54+i*13],[W*.55+20+R()*W*.2,54+i*13]],.35,1.2);pl([[W*.5,66],[W*.38,66]],.7);pl([[W*.4,60],[W*.38,66],[W*.4,72]],.7)}
-  else if(k==='split'){// what is said vs what is done: a straight speech line and a wandering action line
-    pl([[20,cy-20],[W-20,cy-20]],.6,1.3);const p=[];let y=cy+18;for(let x=20;x<=W-20;x+=8){y+=(R()-.5)*10;y=Math.max(cy,Math.min(H-12,y));p.push([x,y])}pl(p,.7,1.3);
-    dot(20,cy-20,3);dot(20,cy+18,3);ring(W-20,cy-20,5);dot(W-20,p[p.length-1][1],3)}
-  else if(k==='paper'){st(.6,1);c.strokeRect(W*.18,10,W*.38,H-20);for(let i=0;i<8;i++)pl([[W*.21,24+i*12],[W*.21+W*.32*(.6+R()*.4),24+i*12]],.4,1.1);
-    for(let i=0;i<3;i++){const y=26+i*34,x=W*.66;st(.55,1);c.beginPath();c.roundRect?c.roundRect(x,y,W*.24,22,8):c.rect(x,y,W*.24,22);c.stroke();pl([[x+8,y+11],[x+W*.16,y+11]],.35,1.1);pl([[W*.56,34+i*24],[x,y+11]],.35,.8);dot(W*.56,34+i*24,2)}}
-  else if(k==='grid'){const x0=W*.12,y0=12,cw=(W*.76)/6,rh=(H-24)/6;st(.35,.8);for(let i=0;i<=6;i++){c.beginPath();c.moveTo(x0+i*cw,y0);c.lineTo(x0+i*cw,y0+rh*6);c.stroke();c.beginPath();c.moveTo(x0,y0+i*rh);c.lineTo(x0+cw*6,y0+i*rh);c.stroke()}
-    // the agent's edits, each checked off
-    for(let i=0;i<5;i++){const a=Math.floor(R()*6),b=Math.floor(R()*6);fi(.12);c.fillRect(x0+a*cw+1,y0+b*rh+1,cw-2,rh-2);pl([[x0+a*cw+cw*.3,y0+b*rh+rh*.55],[x0+a*cw+cw*.45,y0+b*rh+rh*.75],[x0+a*cw+cw*.72,y0+b*rh+rh*.28]],.75,1.3)}}
-  else if(k==='paths'){// many possible branches; one worn path drawn heavy
-    const sx=24,sy=cy;for(let i=0;i<9;i++){const ey=12+i*(H-24)/8,p=[];for(let t=0;t<=1;t+=.05)p.push([sx+t*(W-48),sy+(ey-sy)*Math.pow(t,1.4)+(R()-.5)*2]);pl(p,.22,1)}
-    const p=[];for(let t=0;t<=1;t+=.04)p.push([sx+t*(W-48),sy+(R()-.5)*1.5]);pl(p,.85,2.4);dot(sx,sy,3.5,.85)}
-  else if(k==='connect'){// two heads of nodes, the second more densely connected
-    for(const [ox,dens] of [[W*.27,.25],[W*.73,.6]]){const n=[];for(let i=0;i<14;i++){const a=R()*TAU,rr=Math.sqrt(R())*H*.38;n.push([ox+Math.cos(a)*rr*1.15,cy+Math.sin(a)*rr])}
-      st(.6,1);c.beginPath();c.ellipse(ox,cy,H*.48,H*.44,0,0,TAU);c.stroke();
-      for(let i=0;i<n.length;i++)for(let j=i+1;j<n.length;j++)if(R()<dens*.35)pl([n[i],n[j]],.3,.8);n.forEach(p=>dot(p[0],p[1],2.2,.75))}
-    pl([[W*.45,cy],[W*.55,cy]],.6);pl([[W*.53,cy-5],[W*.55,cy],[W*.53,cy+5]],.6)}
-  else if(k==='eeg'){for(let i=0;i<5;i++){pl(wave(16+i*24,4+R()*3,.05+R()*.05,R()*6),.55,1.1)}
-    st(.5,1);c.setLineDash([3,4]);c.strokeRect(W*.55,6,W*.22,H-12);c.setLineDash([]);fi(.06);c.fillRect(W*.55,6,W*.22,H-12)}
-  else if(k==='speech'){// a speech waveform with a gap, and a nudge dropping into it
-    const p=[];for(let x=16;x<W-16;x+=2.2){const gap=x>W*.52&&x<W*.66;const amp=gap?1:(10+12*Math.abs(Math.sin(x*.03)))*R();p.push([x,cy+(x%4.4<2.2?amp:-amp)])}pl(p,.5,.9);
-    ring(W*.59,cy-34,9,.75,1.2);dot(W*.59,cy-34,2.5,.8);pl([[W*.59,cy-25],[W*.59,cy-6]],.6);c.setLineDash([2,3]);pl([[W*.52,cy+28],[W*.66,cy+28]],.5);c.setLineDash([])}
-  else if(k==='fractal'){// a long-memory signal: wiggles inside wiggles, with a falling trend
-    let y=cy-26;const p=[];for(let x=16;x<W-16;x+=2){y+=(R()-.48)*5+.12;p.push([x,y])}pl(p,.7,1.1);
-    st(.35,.8);c.setLineDash([4,4]);c.beginPath();c.moveTo(16,cy-26);c.lineTo(W-16,cy+34);c.stroke();c.setLineDash([]);ring(W-22,p[p.length-1][1],6,.7)}
-  else if(k==='road'){// a lane that narrows, a hand-off point where control shifts
-    pl([[W*.08,H-8],[W*.44,14]],.6,1.2);pl([[W*.92,H-8],[W*.56,14]],.6,1.2);for(let i=0;i<6;i++){const t=i/6,y=H-12-t*(H-30);pl([[cx,y],[cx,y-8*(1-t)]],.55,1.4*(1-t*.5))}
-    const p=[];for(let t=0;t<=1;t+=.05)p.push([cx-30+Math.sin(t*7)*14*(1-t)+t*30,H-14-t*(H-40)]);pl(p,.75,1.6);ring(cx,H*.42,7,.75,1.2)}
-  else if(k==='multi'){// three streams (audio, video, behaviour) fusing into one
-    const ys=[cy-36,cy,cy+36];ys.forEach((y,i)=>{const p=i===0?wave(y,7,.12,i):i===1?[[16,y],[W*.18,y]].concat([...Array(6)].map((_,j)=>[W*.2+j*14,y])):wave(y,4,.04,i,16,W*.6);
-      if(i===1){st(.55,1);for(let j=0;j<6;j++)c.strokeRect(16+j*16,y-6,12,12)}else pl(p.filter(q=>q[0]<W*.6),.5,1);pl([[W*.6,y],[W*.75,cy]],.45,1)});ring(W*.78,cy,8,.75,1.3);pl([[W*.81,cy],[W-16,cy]],.7,1.5)}
-  else if(k==='clock'){ring(W*.3,cy,H*.36,.65,1.3);pl([[W*.3,cy],[W*.3,cy-H*.24]],.75,1.6);pl([[W*.3,cy],[W*.3+H*.18,cy+4]],.75,1.6);
-    for(let i=0;i<12;i++){const a=i/12*TAU;pl([[W*.3+Math.cos(a)*H*.3,cy+Math.sin(a)*H*.3],[W*.3+Math.cos(a)*H*.34,cy+Math.sin(a)*H*.34]],.5,1)}
-    for(let i=0;i<5;i++){const y=22+i*20;pl([[W*.55,y],[W*.55+(10+i*i*7),y]],.5,1.4)}}
-  else if(k==='vr'){st(.6,1.2);c.beginPath();c.roundRect?c.roundRect(cx-60,cy-26,120,52,18):c.rect(cx-60,cy-26,120,52);c.stroke();ring(cx-28,cy,13,.6);ring(cx+28,cy,13,.6);
-    for(let i=0;i<14;i++){const a=R()*TAU,rr=70+R()*W*.3;dot(cx+Math.cos(a)*rr,cy+Math.sin(a)*rr*.45,1.6,.4)}}
-  else if(k==='gaze'){st(.6,1.2);c.beginPath();c.moveTo(W*.1,cy);c.quadraticCurveTo(W*.24,cy-30,W*.38,cy);c.quadraticCurveTo(W*.24,cy+30,W*.1,cy);c.stroke();ring(W*.24,cy,10,.7);dot(W*.24,cy,4,.8);
-    const pts=[];for(let i=0;i<7;i++)pts.push([W*.5+R()*W*.4,14+R()*(H-28)]);pl(pts,.35,1);pts.forEach((p,i)=>ring(p[0],p[1],2+i*.8,.6));pl([[W*.38,cy],[pts[0][0],pts[0][1]]],.25,.8)}
-}
-const drawAll=()=>document.querySelectorAll('.sheet canvas').forEach(sketch);
-drawAll();let t;addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(drawAll,150)});
 </script>
 </body>
 </html>

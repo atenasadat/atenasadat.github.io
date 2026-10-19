@@ -43,7 +43,8 @@
 .ap li{font-family:var(--serif);font-style:italic;font-size:19px;line-height:1.45;padding-left:28px;position:relative}
 .ap li::before{content:"↳";position:absolute;left:0;top:0;font-style:normal;font-family:var(--mono);font-size:15px;color:var(--faint)}
 .ap .refs{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
-.ap .refs a{font-size:12px;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:3px 11px;color:var(--soft)}
+.ap .refs a,.ap .refs span{font-size:12px;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:3px 11px;color:var(--soft)}
+.ap .refs span{border-style:dashed;color:var(--faint)}
 .ap .refs a:hover{color:var(--ink);border-color:var(--ink)}
 .more{display:flex;justify-content:center;margin-top:clamp(40px,6vw,64px)}
 @media (max-width:820px){.ap{grid-template-columns:1fr}.bio{grid-template-columns:1fr}}
@@ -84,24 +85,24 @@
       <div class="n">001</div>
       <div><h3>How people work with AI</h3>
         <p>I watch people do real work with AI, such as programming, writing and reading research, and measure what changes in how they reason. Mixed-methods studies show where trust, bias and habit enter the loop, and turn that into requirements for better tools.</p>
-        <div class="refs"><a href="projects.html#biases">Cognitive biases · ICSE 2026</a><a href="projects.html#mentalmodels">Mental models of AI</a><a href="projects.html#paperreading">Paper reading · UIST 2025</a><a href="projects.html#spreadsheets">Agents in spreadsheets</a></div></div>
-      <ul><li>Do LLM assistants make developers’ cognitive biases louder?</li><li>Why do developers say one thing about AI and do another?</li></ul>
+        <div class="refs"><a href="https://arxiv.org/abs/2601.08045" target="_blank" rel="noopener">Cognitive Biases in LLM-Assisted Software Development · ICSE 2026 <span aria-hidden="true">↗</span></a><a href="https://aceatusc.github.io/surf" target="_blank" rel="noopener">Beyond the Page · UIST 2025 <span aria-hidden="true">↗</span></a><span>“Do as I say, not as I code?” · under review</span><span>Auditing and Controlling AI Agent Actions in Spreadsheets · under review</span></div></div>
+      <ul><li>Does working with AI amplify the cognitive biases people already have?</li><li>Why do people describe AI one way and rely on it in another?</li></ul>
     </article>
 
     <article class="ap reveal">
       <div class="n">002</div>
       <div><h3>How AI changes the mind</h3>
         <p>Working with AI does not only change the output. It changes the person producing it. I study that change at two levels: in behaviour, through the creative process, and in the brain, through EEG measures of connectivity and creative flow.</p>
-        <div class="refs"><a href="projects.html#creativecode">Creative programming</a><a href="projects.html#genai">Generative AI &amp; the brain</a><a href="projects.html#flow">Creative flow</a></div></div>
-      <ul><li>Does autocomplete pull programmers onto the path of least resistance?</li><li>Does working with generative AI change how the brain connects during creative work?</li></ul>
+        <div class="refs"><span>“Like Taking the Path of Least Resistance” · under revision</span><span>Generative AI and Brain Connectivity · in submission</span></div></div>
+      <ul><li>Does AI pull people toward the path of least resistance when they create?</li><li>Does working with generative AI change how the brain connects during creative work?</li></ul>
     </article>
 
     <article class="ap reveal">
       <div class="n">003</div>
       <div><h3>Aligning AI with human cognition</h3>
         <p>If AI changes how we think, it should also know how we are thinking. I build systems that sense a person’s state, through speech, physiology and behaviour, and decide when and how to step in, so the AI fits the person instead of the other way around.</p>
-        <div class="refs"><a href="projects.html#thinkaloud">Think-aloud nudges</a><a href="projects.html#fatigue">Cognitive fatigue from EEG</a><a href="projects.html#autonomy">Shared autonomy</a><a href="projects.html#engagement">Engagement sensing</a></div></div>
-      <ul><li>Can an agent hear the gap in someone’s reasoning and nudge at the right moment?</li><li>Can EEG tell a system that a person is too fatigued to keep going?</li></ul>
+        <div class="refs"><span>Surfacing Latent Reasoning Gaps · under review</span><span>Non-Markovian Modeling of EEG for Cognitive Fatigue · IEEE JBHI, under review</span></div></div>
+      <ul><li>Can an AI sense a gap in someone’s reasoning and step in at the right moment?</li><li>Can a system read a person’s cognitive state, such as fatigue, engagement or flow, and adapt to it?</li></ul>
     </article>
 
     <div class="more reveal"><a class="pill" href="projects.html">View all projects <span aria-hidden="true">→</span></a></div>
