@@ -27,6 +27,8 @@
 .sheet:target{border-color:var(--accent)}
 .sheet[hidden]{display:none}
 .sheet header{display:flex;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--faint)}
+
+.sheet a:has(>img.ph):hover img{border-color:color-mix(in srgb,var(--ink) 35%,transparent)}
 .sheet .ph{display:grid;place-items:center;width:100%;aspect-ratio:16/9;margin:14px 0 16px;border-radius:4px;border:1px solid var(--line);object-fit:cover;
   background:repeating-linear-gradient(135deg,rgba(43,50,64,.035) 0 10px,transparent 10px 20px),rgba(250,248,244,.6)}
 .sheet .ph span{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
@@ -43,6 +45,7 @@
 .group-note .num{font-size:22px}
 .group-note h3{margin:0;font-weight:400;font-size:22px}
 .group-note[hidden]{display:none}
+.sheet img.ph{display:block;background:#fff;height:auto;aspect-ratio:auto}
 </style>
 </head>
 <body>
@@ -83,7 +86,7 @@ const P=[
   d:'Tools for auditing and steering what an AI agent does inside a spreadsheet, so users can see, check and undo its actions.',tags:['agents','end-user programming','control'],au:'Sabouri, S., '+ME+', Huang, R., Maladi, S., Eufracio, E., Gulwani, S., & Chattopadhyay, S.'},
  {id:'creativecode',g:2,ven:'Under revision',t:'“Like taking the path of least resistance”',q:'Does autocomplete pull programmers onto the path of least resistance?',
   d:'How interacting with LLMs changes the creative process of programming: which ideas get explored, and which ones never get written.',tags:['creativity','think-aloud','programming'],au:ME+', Huang, R., & Chattopadhyay, S.'},
- {id:'genai',g:2,ven:'In submission',t:'Generative AI and brain connectivity',q:'Does working with generative AI change how the brain connects during creative work?',
+ {id:'genai',g:2,img:'assets/projects/genai-card.jpg',full:'assets/projects/genai-full.jpg',alt:'EEG connectivity on a brain model, unassisted versus LLM-assisted, theta band',ven:'In submission',t:'Generative AI and brain connectivity',q:'Does working with generative AI change how the brain connects during creative work?',
   d:'Within-subject studies with 20 participants and about 20 hours of 21-channel, 300 Hz wearable DSI-24 EEG, synchronized with screen and think-aloud recordings, measuring how generative AI use changes brain activity during creative work.',tags:['EEG','DSI-24','within-subject'],au:ME+' et al.'},
  {id:'llmbrain',g:2,ven:'Lead researcher · 2025–',t:'Brain dynamics of LLM-assisted programming',q:'What happens in a programmer’s brain at the moment of insight, with and without an AI assistant?',
   d:'A within-subject EEG study, with screen and think-aloud data, of how coding assistants such as GitHub Copilot and GPT-class models reshape creative problem-solving. Event-locked, time-frequency, connectivity and mixed-effects analyses map AI-use episodes and creative stages onto confirmed insight moments.',tags:['EEG','MNE-Python','mixed-effects']},
@@ -117,7 +120,7 @@ for(const p of P){if(p.g!==last){html+=`<div class="group-note" id="area-${p.g}"
   i++;
   html+=`<article class="sheet" id="${p.id}" data-g="${p.g}">
   <header><span>${p.g?'00'+p.g:'000'} · ${String(i).padStart(2,'0')}</span><span>${esc(p.ven)}</span></header>
-  ${p.img?`<img class="ph" src="${p.img}" alt="">`:`<div class="ph" aria-hidden="true"><span>Image</span></div>`}
+  ${p.img?(p.full?`<a href="${p.full}" target="_blank" rel="noopener" aria-label="Open the full figure"><img class="ph" src="${p.img}" alt="${esc(p.alt||'')}" loading="lazy"></a>`:`<img class="ph" src="${p.img}" alt="${esc(p.alt||'')}" loading="lazy">`):`<div class="ph" aria-hidden="true"><span>Image</span></div>`}
   <div class="body"><h2>${esc(p.t)}</h2><p class="q">${esc(p.q)}</p><p class="d">${esc(p.d)}</p>
   <div class="tags">${p.tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div>${p.au?`<p class="au">${p.au.replace(/&(?!amp;)/g,'&amp;')}</p>`:''}${p.url?`<a class="paper" href="${p.url}" target="_blank" rel="noopener">Read the paper <span aria-hidden="true">↗</span></a>`:''}</div></article>`}
 desk.innerHTML=html;
