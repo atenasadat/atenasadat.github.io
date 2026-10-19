@@ -10,18 +10,16 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Baskervville:ital@0;1&display=swap">
 <link rel="stylesheet" href="assets/site.css">
 <style>
-/* Publications: a title, then one row per paper: year | status | title, with authors · venue below. */
+/* Publications: a title, then one row per paper: year | title, with authors · venue below. */
 .pubs{padding:clamp(40px,7vw,90px) 0 clamp(60px,8vw,110px)}
 .pubs h1{margin:0 0 clamp(20px,3vw,32px);font-weight:300;font-size:clamp(40px,6vw,72px);letter-spacing:-.02em;line-height:1;padding-bottom:22px;border-bottom:1px solid var(--line)}
 .group{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:30px 0 6px}
-.row{display:grid;grid-template-columns:86px 94px minmax(0,1fr);gap:0 16px;align-items:baseline;padding:20px 0;border-bottom:1px solid var(--line)}
+.row{display:grid;grid-template-columns:86px minmax(0,1fr);gap:0 16px;align-items:baseline;padding:20px 0;border-bottom:1px solid var(--line)}
 .row .yr{font-family:var(--mono);font-size:13px;color:var(--soft)}
-.row .badge{justify-self:start;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;border:1px solid currentColor;border-radius:2px;padding:2px 7px;color:#4b6fa3}
-.row .badge.rev{color:#a7803a}
 .row .ti{font-weight:400;font-size:clamp(18px,1.5vw,20px);line-height:1.4;color:var(--ink);text-decoration:none}
 .row a.ti:hover{text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:4px}
 .row .ti .arr{color:var(--accent);font-size:.85em;margin-left:6px}
-.row .info{grid-column:3;margin-top:6px;font-size:14.5px;line-height:1.6;color:var(--soft)}
+.row .info{grid-column:2;margin-top:6px;font-size:14.5px;line-height:1.6;color:var(--soft)}
 .row .info b{font-weight:500;color:var(--ink)}
 @media (max-width:720px){
   .row{grid-template-columns:auto 1fr;gap:6px 12px}
@@ -58,12 +56,11 @@ const PUBS=[
  {yr:'—',status:'review',t:'Auditing and Controlling AI Agent Actions in Spreadsheets',au:'Sabouri, S., Saghi, Z., Huang, R., Maladi, S., Eufracio, E., Gulwani, S., & Chattopadhyay, S.',ven:'Under review'},
 ];
 const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const LABEL={paper:'Paper',review:'In review',revision:'Revision'};
 let html='',last='';
 for(const p of PUBS){const grp=p.status==='paper'?'Peer-reviewed':'Under review or revision';
   if(grp!==last){html+=`<div class="group">${grp}</div>`;last=grp}
   const ti=p.url?`<a class="ti" href="${p.url}" target="_blank" rel="noopener">${esc(p.t)}<span class="arr" aria-hidden="true">↗</span></a>`:`<span class="ti">${esc(p.t)}</span>`;
-  html+=`<article class="row"><span class="yr">${p.yr}</span><span class="badge${p.status==='paper'?'':' rev'}">${LABEL[p.status]}</span>${ti}
+  html+=`<article class="row"><span class="yr">${p.yr}</span>${ti}
     <div class="info">${esc(p.au).replace(esc(ME),'<b>'+esc(ME)+'</b>')} · ${esc(p.ven)}</div></article>`}
 document.getElementById('list').innerHTML=html;
 </script>
