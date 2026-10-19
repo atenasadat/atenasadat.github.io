@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Publications · Athena Saghi</title>
+<meta name="description" content="Publications by Athena (Zeinabsadat) Saghi on human–AI interaction, cognitive bias, creativity and EEG-based cognitive state modeling.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Baskervville:ital@0;1&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+/* Publications: a framed list. Label + italic title + summary on top; each row is year | type | title, authors · venue. */
+.pubs-frame{position:relative;margin:clamp(40px,7vw,90px) 0 clamp(60px,8vw,110px);padding:clamp(26px,4vw,44px) clamp(18px,3vw,36px) clamp(30px,4vw,48px)}
+/* corner brackets */
+.pubs-frame::before,.pubs-frame::after{content:"";position:absolute;left:0;right:0;height:22px;border:1px solid color-mix(in srgb,var(--ink) 40%,transparent);pointer-events:none}
+.pubs-frame::before{top:0;border-bottom:0}
+.pubs-frame::after{bottom:0;border-top:0}
+.pubs-head{display:grid;grid-template-columns:180px minmax(0,1fr) auto;align-items:end;gap:18px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.pubs-head .label{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.pubs-head h1{margin:0;font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(44px,6vw,76px);line-height:1;letter-spacing:-.01em}
+.pubs-head .meta{font-family:var(--mono);font-style:italic;font-size:12px;letter-spacing:.06em;color:var(--faint)}
+.group{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:30px 0 6px}
+.row{display:grid;grid-template-columns:86px 94px minmax(0,1fr);gap:0 16px;align-items:baseline;padding:20px 0;border-bottom:1px solid var(--line)}
+.row .yr{font-family:var(--mono);font-size:13px;color:var(--soft)}
+.row .badge{justify-self:start;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;border:1px solid currentColor;border-radius:2px;padding:2px 7px;color:#4b6fa3}
+.row .badge.rev{color:#a7803a}
+.row .ti{font-family:var(--serif);font-size:clamp(18px,1.6vw,21px);line-height:1.35;color:var(--ink);text-decoration:none}
+.row a.ti:hover{text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:4px}
+.row .ti .arr{color:var(--accent);font-family:var(--sans);font-size:.85em;margin-left:6px}
+.row .info{grid-column:3;margin-top:6px;font-family:var(--mono);font-size:12px;line-height:1.7;color:var(--faint)}
+.row .info b{font-weight:500;color:var(--ink)}
+@media (max-width:720px){
+  .pubs-head{grid-template-columns:1fr}
+  .row{grid-template-columns:auto 1fr;gap:6px 12px}
+  .row .ti,.row .info{grid-column:1/-1}}
+</style>
+</head>
+<body>
+<div class="wash" aria-hidden="true"></div><div class="grain" aria-hidden="true"></div>
+<nav class="site-nav wrap" aria-label="Site">
+  <a class="home" href="index.html">Athena Saghi</a>
+  <span class="mid"><a href="projects.html">Projects</a><a href="publications.html" aria-current="page">Publications</a></span>
+  <span class="right"><a href="about.html">About</a></span>
+</nav>
+
+<main class="wrap">
+  <section class="pubs-frame">
+    <header class="pubs-head">
+      <span class="label">In print</span>
+      <h1>Publications</h1>
+      <span class="meta">— papers · 2025–2026</span>
+    </header>
+    <div id="list"></div>
+  </section>
+</main>
+
+<script src="assets/site.js"></script>
+<script>
+// To add a paper: add an entry here. status 'paper' = published; 'review' or 'revision' = under review. url is optional.
+const ME='Saghi, Z.';
+const PUBS=[
+ {yr:'2026',status:'paper',t:'Cognitive Biases in LLM-Assisted Software Development',url:'https://arxiv.org/abs/2601.08045',au:'Saghi, Z., Zhou, X., Sabouri, S., Pandita, R., McGuire, M., & Chattopadhyay, S.',ven:'ICSE 2026, IEEE/ACM International Conference on Software Engineering'},
+ {yr:'2025',status:'paper',t:'Beyond the Page: Enriching Academic Paper Reading with Social Media Discussions',url:'https://aceatusc.github.io/surf',au:'Huang, R., Zhao, A. K., Saghi, Z., Sabouri, S., & Chattopadhyay, S.',ven:'UIST 2025, ACM Symposium on User Interface Software and Technology'},
+ {yr:'2025',status:'paper',t:'Code Today, Deadline Tomorrow: Procrastination Among Software Developers',url:'https://www.computer.org/csdl/proceedings-article/icse/2025/056900a735/251mHgxubJe',au:'Saghi, Z., Zimmermann, T., & Chattopadhyay, S.',ven:'ICSE 2025, IEEE/ACM International Conference on Software Engineering'},
+ {yr:'—',status:'review',t:'Non-Markovian Dynamical Systems Modeling of EEG-Based Brain Activity for Predicting Cognitive Fatigue Level',au:'Saghi, Z., Riabukhina, D., Akinbami, O., Bogdan, P., & Chattopadhyay, S.',ven:'IEEE Journal of Biomedical and Health Informatics (JBHI), under review'},
+ {yr:'—',status:'review',t:'Surfacing Latent Reasoning Gaps: Contextualized Nudges from Think-Aloud in AI-Assisted Writing',au:'Saghi, Z., Sanidhya, S., Jiang, H., & Chattopadhyay, S.',ven:'Under review'},
+ {yr:'—',status:'review',t:'“Do as I say, not as I code?” How Developers’ Mental Models of AI Diverge from Their Practice',au:'Saghi, Z., & Chattopadhyay, S.',ven:'Under review'},
+ {yr:'—',status:'revision',t:'“Like Taking the Path of Least Resistance”: Exploring the Impact of LLM Interaction on the Creative Process of Programming',au:'Saghi, Z., Huang, R., & Chattopadhyay, S.',ven:'Under revision'},
+ {yr:'—',status:'review',t:'Auditing and Controlling AI Agent Actions in Spreadsheets',au:'Sabouri, S., Saghi, Z., Huang, R., Maladi, S., Eufracio, E., Gulwani, S., & Chattopadhyay, S.',ven:'Under review'},
+];
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const LABEL={paper:'Paper',review:'In review',revision:'Revision'};
+let html='',last='';
+for(const p of PUBS){const grp=p.status==='paper'?'Peer-reviewed':'Under review or revision';
+  if(grp!==last){html+=`<div class="group">${grp}</div>`;last=grp}
+  const ti=p.url?`<a class="ti" href="${p.url}" target="_blank" rel="noopener">${esc(p.t)}<span class="arr" aria-hidden="true">↗</span></a>`:`<span class="ti">${esc(p.t)}</span>`;
+  html+=`<article class="row"><span class="yr">${p.yr}</span><span class="badge${p.status==='paper'?'':' rev'}">${LABEL[p.status]}</span>${ti}
+    <div class="info">${esc(p.au).replace(esc(ME),'<b>'+esc(ME)+'</b>')} · ${esc(p.ven)}</div></article>`}
+document.getElementById('list').innerHTML=html;
+</script>
+</body>
+</html>

@@ -27,6 +27,7 @@ a{color:inherit}
 .site-nav a:hover{color:var(--ink)}
 .site-nav a[aria-current="page"]{color:var(--ink);border-bottom-color:currentColor}
 .site-nav .home{justify-self:start;color:var(--ink)}
+.site-nav .mid{display:flex;gap:clamp(18px,3vw,36px)}
 .site-nav .right{justify-self:end;display:flex;gap:18px;align-items:center}
 
 .pill{display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:8px 16px;border:1px solid color-mix(in srgb,var(--ink) 45%,transparent);border-radius:999px;color:var(--ink);background:rgba(255,255,255,.55);backdrop-filter:blur(2px);cursor:pointer;font-family:var(--sans)}
