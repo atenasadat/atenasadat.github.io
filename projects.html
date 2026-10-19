@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Projects · Athena Saghi</title>
-<meta name="description" content="Research projects by Athena Saghi on how we work with AI, how AI could affect our thinking, and how to align AI with human cognition.">
+<meta name="description" content="Research projects by Athena Saghi on how we work with AI, how AI could affect our thinking, and how to design human-centered AI.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Baskervville:ital@0;1&display=swap">
@@ -39,7 +39,7 @@
 .sheet .tags span{font-family:var(--mono);font-size:11px;border:1px solid var(--line);border-radius:3px;padding:1px 7px;color:var(--soft)}
 .sheet .au{margin:12px 0 0;font-size:12.5px;color:var(--faint);line-height:1.5}
 .sheet .au b{font-weight:500;color:var(--soft)}
-.group-note{grid-column:1/-1;display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--line);padding:18px 0 10px;margin-top:10px}
+.group-note{scroll-margin-top:24px;grid-column:1/-1;display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--line);padding:18px 0 10px;margin-top:10px}
 .group-note .num{font-size:22px}
 .group-note h3{margin:0;font-weight:400;font-size:22px}
 .group-note[hidden]{display:none}
@@ -56,13 +56,12 @@
 <main class="wrap">
   <section class="intro">
     <h1>Projects</h1>
-    <p>Each card is one project: the question it started from, what I did, and where it stands.</p>
     <div class="filters" role="group" aria-label="Filter projects">
       <button type="button" data-f="all" aria-pressed="true">All</button>
       <button type="button" data-f="1" aria-pressed="false"><span>001</span>How we work with AI</button>
       <button type="button" data-f="2" aria-pressed="false"><span>002</span>How AI could affect our thinking</button>
-      <button type="button" data-f="3" aria-pressed="false"><span>003</span>Aligning AI with cognition</button>
-      <button type="button" data-f="0" aria-pressed="false"><span>000</span>Earlier work</button>
+      <button type="button" data-f="3" aria-pressed="false"><span>003</span>Designing human-centered AI</button>
+      <button type="button" data-f="0" aria-pressed="false"><span>000</span>Others</button>
     </div>
   </section>
   <section class="desk" id="desk" aria-live="polite"></section>
@@ -72,7 +71,7 @@
 <script src="assets/site.js?v=1792442456"></script>
 <script>
 const ME='<b>Saghi, Z.</b>';
-const GROUPS={1:'How we work with AI',2:'How AI could affect our thinking',3:'Aligning AI with human cognition',0:'Earlier work'};
+const GROUPS={1:'How we work with AI',2:'How AI could affect our thinking',3:'How we can design human-centered AI systems',0:'Others'};
 const P=[
  {id:'biases',g:1,url:'https://arxiv.org/abs/2601.08045',ven:'ICSE 2026',t:'Cognitive biases in LLM-assisted software development',q:'Do LLM assistants make developers’ cognitive biases louder?',
   d:'Mixed-methods and controlled observational studies of developers working with LLM assistants, measuring critical thinking, cognitive load and how existing biases get amplified.',tags:['mixed methods','observational study','cognitive bias'],au:ME+', Zhou, X., Sabouri, S., Pandita, R., McGuire, M., & Chattopadhyay, S.'},
@@ -106,7 +105,7 @@ const P=[
 const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const desk=document.getElementById('desk');
 let html='',last=null,i=0;
-for(const p of P){if(p.g!==last){html+=`<div class="group-note" data-g="${p.g}"><span class="num">${p.g?'00'+p.g:'000'}</span><h3>${GROUPS[p.g]}</h3></div>`;last=p.g}
+for(const p of P){if(p.g!==last){html+=`<div class="group-note" id="area-${p.g}" data-g="${p.g}"><span class="num">${p.g?'00'+p.g:'000'}</span><h3>${GROUPS[p.g]}</h3></div>`;last=p.g}
   i++;
   html+=`<article class="sheet" id="${p.id}" data-g="${p.g}">
   <header><span>${p.g?'00'+p.g:'000'} · ${String(i).padStart(2,'0')}</span><span>${esc(p.ven)}</span></header>
