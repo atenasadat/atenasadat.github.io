@@ -10,28 +10,20 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Baskervville:ital@0;1&display=swap">
 <link rel="stylesheet" href="assets/site.css">
 <style>
-/* Publications: a framed list. Label + italic title + summary on top; each row is year | type | title, authors · venue. */
-.pubs-frame{position:relative;margin:clamp(40px,7vw,90px) 0 clamp(60px,8vw,110px);padding:clamp(26px,4vw,44px) clamp(18px,3vw,36px) clamp(30px,4vw,48px)}
-/* corner brackets */
-.pubs-frame::before,.pubs-frame::after{content:"";position:absolute;left:0;right:0;height:22px;border:1px solid color-mix(in srgb,var(--ink) 40%,transparent);pointer-events:none}
-.pubs-frame::before{top:0;border-bottom:0}
-.pubs-frame::after{bottom:0;border-top:0}
-.pubs-head{display:grid;grid-template-columns:180px minmax(0,1fr) auto;align-items:end;gap:18px;padding-bottom:22px;border-bottom:1px solid var(--line)}
-.pubs-head .label{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
-.pubs-head h1{margin:0;font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(44px,6vw,76px);line-height:1;letter-spacing:-.01em}
-.pubs-head .meta{font-family:var(--mono);font-style:italic;font-size:12px;letter-spacing:.06em;color:var(--faint)}
+/* Publications: a title, then one row per paper: year | status | title, with authors · venue below. */
+.pubs{padding:clamp(40px,7vw,90px) 0 clamp(60px,8vw,110px)}
+.pubs h1{margin:0 0 clamp(20px,3vw,32px);font-weight:300;font-size:clamp(40px,6vw,72px);letter-spacing:-.02em;line-height:1;padding-bottom:22px;border-bottom:1px solid var(--line)}
 .group{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:30px 0 6px}
 .row{display:grid;grid-template-columns:86px 94px minmax(0,1fr);gap:0 16px;align-items:baseline;padding:20px 0;border-bottom:1px solid var(--line)}
 .row .yr{font-family:var(--mono);font-size:13px;color:var(--soft)}
 .row .badge{justify-self:start;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;border:1px solid currentColor;border-radius:2px;padding:2px 7px;color:#4b6fa3}
 .row .badge.rev{color:#a7803a}
-.row .ti{font-family:var(--serif);font-size:clamp(18px,1.6vw,21px);line-height:1.35;color:var(--ink);text-decoration:none}
+.row .ti{font-weight:400;font-size:clamp(18px,1.5vw,20px);line-height:1.4;color:var(--ink);text-decoration:none}
 .row a.ti:hover{text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:4px}
-.row .ti .arr{color:var(--accent);font-family:var(--sans);font-size:.85em;margin-left:6px}
-.row .info{grid-column:3;margin-top:6px;font-family:var(--mono);font-size:12px;line-height:1.7;color:var(--faint)}
+.row .ti .arr{color:var(--accent);font-size:.85em;margin-left:6px}
+.row .info{grid-column:3;margin-top:6px;font-size:14.5px;line-height:1.6;color:var(--soft)}
 .row .info b{font-weight:500;color:var(--ink)}
 @media (max-width:720px){
-  .pubs-head{grid-template-columns:1fr}
   .row{grid-template-columns:auto 1fr;gap:6px 12px}
   .row .ti,.row .info{grid-column:1/-1}}
 </style>
@@ -45,12 +37,8 @@
 </nav>
 
 <main class="wrap">
-  <section class="pubs-frame">
-    <header class="pubs-head">
-      <span class="label">In print</span>
-      <h1>Publications</h1>
-      <span class="meta">— papers · 2025–2026</span>
-    </header>
+  <section class="pubs">
+    <h1>Publications</h1>
     <div id="list"></div>
   </section>
 </main>
@@ -61,9 +49,9 @@
 const ME='Saghi, Z.';
 const PUBS=[
  {yr:'2026',status:'paper',t:'Cognitive Biases in LLM-Assisted Software Development',url:'https://arxiv.org/abs/2601.08045',au:'Saghi, Z., Zhou, X., Sabouri, S., Pandita, R., McGuire, M., & Chattopadhyay, S.',ven:'ICSE 2026, IEEE/ACM International Conference on Software Engineering'},
+ {yr:'2026',status:'paper',t:'Non-Markovian Dynamical Systems Modeling of EEG-Based Brain Activity for Predicting Cognitive Fatigue Level',au:'Saghi, Z., Riabukhina, D., Akinbami, O., Bogdan, P., & Chattopadhyay, S.',ven:'IEEE Journal of Biomedical and Health Informatics (JBHI)'},
  {yr:'2025',status:'paper',t:'Beyond the Page: Enriching Academic Paper Reading with Social Media Discussions',url:'https://aceatusc.github.io/surf',au:'Huang, R., Zhao, A. K., Saghi, Z., Sabouri, S., & Chattopadhyay, S.',ven:'UIST 2025, ACM Symposium on User Interface Software and Technology'},
  {yr:'2025',status:'paper',t:'Code Today, Deadline Tomorrow: Procrastination Among Software Developers',url:'https://www.computer.org/csdl/proceedings-article/icse/2025/056900a735/251mHgxubJe',au:'Saghi, Z., Zimmermann, T., & Chattopadhyay, S.',ven:'ICSE 2025, IEEE/ACM International Conference on Software Engineering'},
- {yr:'—',status:'review',t:'Non-Markovian Dynamical Systems Modeling of EEG-Based Brain Activity for Predicting Cognitive Fatigue Level',au:'Saghi, Z., Riabukhina, D., Akinbami, O., Bogdan, P., & Chattopadhyay, S.',ven:'IEEE Journal of Biomedical and Health Informatics (JBHI), under review'},
  {yr:'—',status:'review',t:'Surfacing Latent Reasoning Gaps: Contextualized Nudges from Think-Aloud in AI-Assisted Writing',au:'Saghi, Z., Sanidhya, S., Jiang, H., & Chattopadhyay, S.',ven:'Under review'},
  {yr:'—',status:'review',t:'“Do as I say, not as I code?” How Developers’ Mental Models of AI Diverge from Their Practice',au:'Saghi, Z., & Chattopadhyay, S.',ven:'Under review'},
  {yr:'—',status:'revision',t:'“Like Taking the Path of Least Resistance”: Exploring the Impact of LLM Interaction on the Creative Process of Programming',au:'Saghi, Z., Huang, R., & Chattopadhyay, S.',ven:'Under revision'},
