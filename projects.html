@@ -84,25 +84,31 @@ const P=[
  {id:'creativecode',g:2,ven:'Under revision',t:'“Like taking the path of least resistance”',q:'Does autocomplete pull programmers onto the path of least resistance?',
   d:'How interacting with LLMs changes the creative process of programming: which ideas get explored, and which ones never get written.',tags:['creativity','think-aloud','programming'],au:ME+', Huang, R., & Chattopadhyay, S.'},
  {id:'genai',g:2,ven:'In submission',t:'Generative AI and brain connectivity',q:'Does working with generative AI change how the brain connects during creative work?',
-  d:'Within-subject EEG studies with a wearable DSI-24 headset, quantifying how generative AI use alters functional brain connectivity during creative and cognitive tasks.',tags:['EEG','DSI-24','within-subject'],au:ME+' et al.'},
+  d:'Within-subject studies with 20 participants and about 20 hours of 21-channel, 300 Hz wearable DSI-24 EEG, synchronized with screen and think-aloud recordings, measuring how generative AI use changes brain activity during creative work.',tags:['EEG','DSI-24','within-subject'],au:ME+' et al.'},
+ {id:'llmbrain',g:2,ven:'Lead researcher · 2025–',t:'Brain dynamics of LLM-assisted programming',q:'What happens in a programmer’s brain at the moment of insight, with and without an AI assistant?',
+  d:'A within-subject EEG study, with screen and think-aloud data, of how coding assistants such as GitHub Copilot and GPT-class models reshape creative problem-solving. Event-locked, time-frequency, connectivity and mixed-effects analyses map AI-use episodes and creative stages onto confirmed insight moments.',tags:['EEG','MNE-Python','mixed-effects']},
  {id:'flow',g:2,ven:'Ongoing',t:'Neural signatures of creative flow',q:'Can we predict creative flow from neural signals, and protect it?',
   d:'Predictive models of creativity-related neural signatures, built to time real-time interventions that sustain engagement and creative flow.',tags:['EEG','prediction','creativity'],au:ME+' et al.'},
  {id:'thinkaloud',g:3,ven:'Under review',t:'Surfacing latent reasoning gaps',q:'Can an agent hear the gap in someone’s reasoning and nudge at the right moment?',
-  d:'ATHENA, a real-time agentic system that listens to think-aloud speech while people write, monitors their reasoning, predicts gaps and delivers contextualized nudges.',tags:['agentic AI','speech','writing'],au:ME+', Sanidhya, S., Jiang, H., & Chattopadhyay, S.'},
+  d:'ATHENA, a web-based adaptive system built on Gemini models that interprets think-aloud speech while people write, detects gaps in their reasoning, delivers contextualized nudges and supports annotation of study data.',tags:['agentic AI','Gemini','think-aloud'],au:ME+', Sanidhya, S., Jiang, H., & Chattopadhyay, S.'},
  {id:'fatigue',g:3,ven:'IEEE JBHI 2026',t:'Predicting cognitive fatigue from EEG',q:'Can EEG tell a system that a person is too fatigued to keep going?',
-  d:'A Fractional Dynamical Networks ML framework that models EEG as a non-Markovian system and predicts cognitive fatigue in real time with 93.33% accuracy and 0.95 AUROC.',tags:['EEG','dynamical systems','ML'],au:ME+', Riabukhina, D., Akinbami, O., Bogdan, P., & Chattopadhyay, S.'},
+  d:'FDNML, a 6.24K-parameter two-stage contrastive model that treats 4-channel EEG as a non-Markovian system. On CogBeacon (19 participants, 76 sessions) it reaches 93.33% three-class accuracy and 0.95 AUROC, ahead of Transformer (76.67%), DNN (66.67%) and LSTM (40.00%) baselines.',tags:['EEG','contrastive learning','dynamical systems'],au:ME+', Riabukhina, D., Akinbami, O., Bogdan, P., & Chattopadhyay, S.'},
  {id:'autonomy',g:3,ven:'Ongoing',t:'Cognitive-aware shared autonomy',q:'When should a car take over from a driver who is not at their best?',
-  d:'A shared-autonomy system formalized as a multi-agent POMDP that models the user’s cognitive impairment and chooses control interventions, evaluated in semi-autonomous driving studies.',tags:['POMDP','human-in-the-loop','driving'],au:ME+' et al.'},
+  d:'A shared-autonomy system formalized as a multi-agent POMDP that models the user’s cognitive impairment and chooses control interventions, evaluated with participants in driving-simulator studies.',tags:['POMDP','human-in-the-loop','driving'],au:ME+' et al.'},
+ {id:'alignment',g:3,ven:'USC · 2026–',t:'Human-centered alignment for generative reasoning',q:'Can a language model learn to brainstorm the way people do?',
+  d:'A GRPO reinforcement learning framework that aligns Qwen 2.5 and Llama 3 generation with human brainstorming patterns, rewarding conceptual synthesis, semantic fidelity and idea exploration, with an end-to-end PyTorch pipeline built on structured think-aloud data.',tags:['GRPO','LoRA','Qwen 2.5 · Llama 3']},
+ {id:'verification',g:3,ven:'USC · 2026–',t:'Human-AI code comprehension and verification',q:'Does a developer actually understand the code an AI just wrote?',
+  d:'A framework that aligns GPT-4o and Claude 3.5 code generation with developers’ mental models to reduce automation bias. A graph-difference method compares compiler-level AST structure with developer attention to catch skipped dependencies and state changes, and Bayesian modeling reconciles what developers think they understood with what they verified.',tags:['AST analysis','Bayesian modeling','automation bias']},
  {id:'engagement',g:3,ven:'USC · 2024',t:'Detecting interpersonal engagement',q:'Can a system tell who in a conversation is actually engaged?',
-  d:'A multimodal engagement-prediction system fusing synchronized audio, video, behavioural and multi-party context signals, from preprocessing through training and evaluation.',tags:['multimodal ML','audio','video'],au:ME},
+  d:'A multimodal engagement-prediction system for social interaction, fusing synchronized audio, video, behavioural and multi-party context signals, from preprocessing through training and evaluation.',tags:['multimodal ML','audio','video'],au:ME},
  {id:'procrastination',g:0,url:'https://www.computer.org/csdl/proceedings-article/icse/2025/056900a735/251mHgxubJe',ven:'ICSE 2025',t:'Code today, deadline tomorrow',q:'Why does the code wait until tomorrow?',
   d:'A study of when and why software developers procrastinate, and what kind of support would actually help them start.',tags:['survey','interviews','developers'],au:ME+', Zimmermann, T., & Chattopadhyay, S.'},
  {id:'vr',g:0,ven:'UC Davis · 2022–23',t:'Pedagogical agents in VR',q:'Can an autonomous agent teach STEM well at a distance?',
-  d:'A custom Unity VR application for Meta Quest 2 to study autonomous pedagogical agents in distance STEM learning, including the environment, interaction logging and study protocol.',tags:['Unity','VR','learning'],au:'Motion Capture Lab, UC Davis'},
+  d:'An interactive Unity VR research prototype for Meta Quest 2 to study autonomous pedagogical agents in distance STEM learning, including the environment, interaction logging and study protocol.',tags:['Unity','VR','learning'],au:'Motion Capture Lab, UC Davis'},
  {id:'attention',g:0,ven:'Sharif · 2021–22',t:'EEG and gaze for visual attention',q:'Can brain signals and gaze together predict where attention goes?',
-  d:'RNNs and attention-based autoencoders for representation learning on EEG, fused with gaze estimation on the SEED dataset for integrated attention prediction.',tags:['EEG','gaze','representation learning'],au:'DML Lab, Sharif University of Technology'},
+  d:'RNNs and attention-based autoencoders for representation learning on EEG, fused with gaze estimation on the 62-channel SEED EEG dataset for attention prediction.',tags:['EEG','gaze','representation learning'],au:'DML Lab, Sharif University of Technology'},
  {id:'medical',g:0,ven:'CommaMed · 2020–22',t:'Deep learning for medical imaging',q:'Can a model find what matters in a medical scan?',
-  d:'PyTorch models for medical image segmentation and classification, built and evaluated end to end, from preprocessing to performance evaluation.',tags:['PyTorch','segmentation','classification'],au:'R&D internship, CommaMed'},
+  d:'PyTorch models for medical image segmentation and classification on hospital-sourced data, owned from preprocessing to evaluation in collaboration with product teams.',tags:['PyTorch','segmentation','classification'],au:'R&D internship, CommaMed'},
 ];
 const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const desk=document.getElementById('desk');
@@ -113,7 +119,7 @@ for(const p of P){if(p.g!==last){html+=`<div class="group-note" id="area-${p.g}"
   <header><span>${p.g?'00'+p.g:'000'} · ${String(i).padStart(2,'0')}</span><span>${esc(p.ven)}</span></header>
   ${p.img?`<img class="ph" src="${p.img}" alt="">`:`<div class="ph" aria-hidden="true"><span>Image</span></div>`}
   <div class="body"><h2>${esc(p.t)}</h2><p class="q">${esc(p.q)}</p><p class="d">${esc(p.d)}</p>
-  <div class="tags">${p.tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div><p class="au">${p.au.replace(/&(?!amp;)/g,'&amp;')}</p>${p.url?`<a class="paper" href="${p.url}" target="_blank" rel="noopener">Read the paper <span aria-hidden="true">↗</span></a>`:''}</div></article>`}
+  <div class="tags">${p.tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div>${p.au?`<p class="au">${p.au.replace(/&(?!amp;)/g,'&amp;')}</p>`:''}${p.url?`<a class="paper" href="${p.url}" target="_blank" rel="noopener">Read the paper <span aria-hidden="true">↗</span></a>`:''}</div></article>`}
 desk.innerHTML=html;
 
 // filters
