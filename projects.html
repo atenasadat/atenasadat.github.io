@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Projects · Athena Saghi</title>
-<meta name="description" content="Research projects by Athena Saghi on how people work with AI, how AI changes the mind, and how to align AI with human cognition.">
+<meta name="description" content="Research projects by Athena Saghi on how we work with AI, how AI could affect our thinking, and how to align AI with human cognition.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Baskervville:ital@0;1&display=swap">
@@ -59,8 +59,8 @@
     <p>Each card is one project: the question it started from, what I did, and where it stands.</p>
     <div class="filters" role="group" aria-label="Filter projects">
       <button type="button" data-f="all" aria-pressed="true">All</button>
-      <button type="button" data-f="1" aria-pressed="false"><span>001</span>How people work with AI</button>
-      <button type="button" data-f="2" aria-pressed="false"><span>002</span>How AI changes the mind</button>
+      <button type="button" data-f="1" aria-pressed="false"><span>001</span>How we work with AI</button>
+      <button type="button" data-f="2" aria-pressed="false"><span>002</span>How AI could affect our thinking</button>
       <button type="button" data-f="3" aria-pressed="false"><span>003</span>Aligning AI with cognition</button>
       <button type="button" data-f="0" aria-pressed="false"><span>000</span>Earlier work</button>
     </div>
@@ -72,7 +72,7 @@
 <script src="assets/site.js?v=1792442456"></script>
 <script>
 const ME='<b>Saghi, Z.</b>';
-const GROUPS={1:'How people work with AI',2:'How AI changes the mind',3:'Aligning AI with human cognition',0:'Earlier work'};
+const GROUPS={1:'How we work with AI',2:'How AI could affect our thinking',3:'Aligning AI with human cognition',0:'Earlier work'};
 const P=[
  {id:'biases',g:1,url:'https://arxiv.org/abs/2601.08045',ven:'ICSE 2026',t:'Cognitive biases in LLM-assisted software development',q:'Do LLM assistants make developers’ cognitive biases louder?',
   d:'Mixed-methods and controlled observational studies of developers working with LLM assistants, measuring critical thinking, cognitive load and how existing biases get amplified.',tags:['mixed methods','observational study','cognitive bias'],au:ME+', Zhou, X., Sabouri, S., Pandita, R., McGuire, M., & Chattopadhyay, S.'},
@@ -80,7 +80,7 @@ const P=[
   d:'How developers’ mental models of AI diverge from their actual practice, and what that gap means for the design of coding assistants.',tags:['interviews','mental models','programming'],au:ME+', & Chattopadhyay, S.'},
  {id:'paperreading',g:1,url:'https://aceatusc.github.io/surf',ven:'UIST 2025',t:'Beyond the page',q:'What if a research paper came with the conversation around it?',
   d:'A reading system that enriches academic papers with social media discussions, placing community commentary next to the passages it is about.',tags:['system','reading','UIST'],au:'Huang, R., Zhao, A. K., '+ME+', Sabouri, S., & Chattopadhyay, S.'},
- {id:'spreadsheets',g:1,ven:'Under review',t:'Auditing and controlling AI agent actions in spreadsheets',q:'How do people stay in control when an agent edits their data?',
+ {id:'spreadsheets',g:1,ven:'Under review',t:'Auditing and controlling AI agent actions in spreadsheets',q:'How do we stay in control when an agent edits our data?',
   d:'Tools for auditing and steering what an AI agent does inside a spreadsheet, so users can see, check and undo its actions.',tags:['agents','end-user programming','control'],au:'Sabouri, S., '+ME+', Huang, R., Maladi, S., Eufracio, E., Gulwani, S., & Chattopadhyay, S.'},
  {id:'creativecode',g:2,ven:'Under revision',t:'“Like taking the path of least resistance”',q:'Does autocomplete pull programmers onto the path of least resistance?',
   d:'How interacting with LLMs changes the creative process of programming: which ideas get explored, and which ones never get written.',tags:['creativity','think-aloud','programming'],au:ME+', Huang, R., & Chattopadhyay, S.'},
