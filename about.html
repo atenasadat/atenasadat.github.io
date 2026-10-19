@@ -13,7 +13,7 @@
 /* About: a portrait beside a short narrative bio and contact icons. Nothing else on the page. */
 .about{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:clamp(32px,6vw,88px);align-items:start;padding:clamp(48px,9vw,120px) 0 clamp(64px,10vw,140px)}
 /* to use a real photo, replace the .portrait div with: <img class="portrait" src="assets/profile.jpg" alt="Athena Saghi"> */
-.portrait{width:100%;aspect-ratio:4/5;border-radius:6px;border:1px solid var(--line);object-fit:cover;display:grid;place-items:center;
+.portrait{width:100%;aspect-ratio:4/5;border-radius:6px;border:1px solid var(--line);object-fit:cover;object-position:60% 40%;display:block;height:auto;
   background:repeating-linear-gradient(135deg,rgba(43,50,64,.035) 0 10px,transparent 10px 20px),rgba(255,255,255,.55)}
 .portrait span{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
 .bio p{margin:0 0 22px;font-size:clamp(18px,1.6vw,21px);line-height:1.65;max-width:36em}
@@ -36,7 +36,7 @@
 
 <main class="wrap">
   <section class="about">
-    <div class="portrait" role="img" aria-label="Photo of Athena Saghi (placeholder)"><span>Photo</span></div>
+    <img class="portrait" src="assets/profile.jpg" alt="Athena Saghi" width="960" height="960">
     <div class="bio">
       <p>Athena (Zeinabsadat) Saghi is a <span class="mark role">Human-Centered AI Researcher</span> working at the intersection of cognitive science, artificial intelligence, and Human-Computer Interaction (HCI). She is a PhD candidate in Computer Science at the University of Southern California, in the Adaptive Computing (ACE) Lab, advised by Prof. Souti Chattopadhyay.</p>
       <p>She works across neuroscience and computing, pairing behavioral studies with physiological sensing to understand how AI reshapes human thinking. Her research examines what happens to people’s judgment, creativity and biases when they work with large language models. She also builds human-in-the-loop and agentic systems that sense a person’s cognitive state, from think-aloud speech to EEG, and adapt to it in real time.</p>
