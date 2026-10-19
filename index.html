@@ -16,6 +16,13 @@
   /* the drawing dissolves into the page instead of ending at a hard edge */
   -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 90px,#000 62%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 90px,#000 62%,transparent 100%)}
 #hero-cv{opacity:.55}
+.hero .story{position:absolute;z-index:3;left:max(clamp(16px,4vw,40px),calc((100% - 1180px)/2 + clamp(16px,4vw,40px)));bottom:30px;display:flex;gap:10px;align-items:baseline;
+  font-size:14px;color:var(--soft);text-decoration:none;transition:opacity .45s ease;padding:6px 12px 6px 0}
+.hero .story .n{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--accent)}
+.hero .story .sep{color:var(--faint)}
+.hero .story:hover .t{color:var(--ink);text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--accent)}
+@media (max-width:700px){.hero .story{left:50%;transform:translateX(-50%);bottom:14px;white-space:nowrap;font-size:13px}.hero-name{padding-bottom:70px}}
+
 /* a soft band of paper behind the nav so its links stay readable over the drawing */
 .hero::before{content:"";position:absolute;left:0;right:0;top:0;height:130px;z-index:1;pointer-events:none;
   background:linear-gradient(to bottom,rgba(250,248,244,.95) 0,rgba(250,248,244,.8) 45%,rgba(250,248,244,0) 100%)}
@@ -60,6 +67,7 @@
     <span class="mid"><a href="projects.html">Projects</a><a href="publications.html">Publications</a></span>
     <span class="right"><a href="about.html">About</a></span>
   </nav>
+  <a class="story" href="#research" aria-live="polite"><span class="n">001</span><span class="sep" aria-hidden="true">·</span><span class="t">How people work with AI</span></a>
   <div class="hero-name">
     <h1>Athena Saghi</h1>
     <a class="pill" href="#about">Learn more <span aria-hidden="true">↓</span></a>

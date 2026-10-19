@@ -132,13 +132,13 @@ const FX=(()=>{
   const cum=pts=>{const c=[0];for(let i=1;i<pts.length;i++)c.push(c[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]));return c};
   const at=(pts,c,d)=>{let i=1;while(i<c.length-1&&c[i]<d)i++;const t=clamp((d-c[i-1])/((c[i]-c[i-1])||1),0,1);return[lerp(pts[i-1][0],pts[i][0],t),lerp(pts[i-1][1],pts[i][1],t)]};
   const col=a=>`rgba(${AC},${clamp(a,0,1).toFixed(3)})`;
-  function reset(){effects=[];hover=null;AC=getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim()||AC;
+  function reset(){effects=[];hover=null;running=false;clearTimeout(idleT);idleT=0;AC=getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim()||AC;
     fx.width=cv.width;fx.height=cv.height;fc.setTransform(DPR,0,0,DPR,0,0);fc.lineCap='round';fc.lineJoin='round';kick();schedule()}
   // a neuron fires: a wave of activity spreads from the soma out along its dendrites, then a spike runs down the axon
   function fire(cell,side,depth=0){if(!cell)return;const D=Math.max(...cell.s.flatMap(st=>st.pts.map(p=>Math.hypot(p[0]-cell.c[0],p[1]-cell.c[1]))),cell.r*3);
     effects.push({k:'fire',cell,D,t0:performance.now(),dur:3800,side,depth});kick()}
   // a signal travels along a polyline; lit nodes along the way
-  function travel(pts,side,opt={}){if(!pts||pts.length<2)return;const c=cum(pts);effects.push({k:'travel',pts,c,t0:performance.now(),speed:opt.speed||.32,trail:opt.trail||90,side,nodes:opt.nodes||[],done:opt.done,w:opt.w||1.6});kick()}
+  function travel(pts,side,opt={}){if(!pts||pts.length<2){if(opt.done)setTimeout(opt.done,0);return}const c=cum(pts);effects.push({k:'travel',pts,c,t0:performance.now(),speed:opt.speed||.32,trail:opt.trail||90,side,nodes:opt.nodes||[],done:opt.done,w:opt.w||1.6});kick()}
   function walk(node,steps=11){const path=[node],seen=new Set([node]);let cur=node;
     for(let i=0;i<steps;i++){const nb=cur.e.map(j=>M.pts[j]).filter(n=>!seen.has(n));if(!nb.length)break;
       // prefer moving away from the neurons, so information flows into the graph
@@ -146,15 +146,15 @@ const FX=(()=>{
     return path}
   function flow(node,side){const path=walk(node);travel(path.map(n=>[n.sx,n.sy]),side,{nodes:path.map(n=>[n.sx,n.sy,n.r||2]),speed:.075,trail:170,w:2.6})}
   function step(){const now=performance.now();raf=0;fc.setTransform(1,0,0,1,0,0);fc.clearRect(0,0,fx.width,fx.height);fc.setTransform(DPR,0,0,DPR,0,0);
-    effects=effects.filter(e=>{const t=now-e.t0;
-      if(e.k==='fire'){const p=t/e.dur;if(p>=1){onFired(e);return false}
+    const after=[];effects=effects.filter(e=>{const t=now-e.t0;
+      if(e.k==='fire'){const p=t/e.dur;if(p>=1){after.push(()=>e.then?e.then():onFired(e));return false}
         const [x,y]=e.cell.c,front=p*e.D*1.1,band=Math.max(22,e.D*.18);
         const gr=e.cell.r*3,g=fc.createRadialGradient(x,y,0,x,y,gr);g.addColorStop(0,col(.6*(1-p*.8)));g.addColorStop(1,col(0));fc.fillStyle=g;fc.beginPath();fc.arc(x,y,gr,0,TAU);fc.fill();
         fc.fillStyle=col(.9*(1-p*.7));fc.beginPath();fc.arc(x,y,e.cell.r*.5,0,TAU);fc.fill();
         for(const st of e.cell.s){const P=st.pts;for(let i=0;i<P.length-1;i++){const d=Math.hypot(P[i][0]-x,P[i][1]-y),a=.95*Math.exp(-(((d-front)/band)**2))+(d<front?.35*(1-p):0);if(a<.03)continue;
           fc.lineWidth=Math.max(1.8,st.w0*.9+.9);fc.strokeStyle=col(a);fc.beginPath();fc.moveTo(P[i][0],P[i][1]);fc.lineTo(P[i+1][0],P[i+1][1]);fc.stroke()}}
         return true}
-      const head=t*e.speed,end=e.c[e.c.length-1];if(head-e.trail>end){e.done&&e.done();return false}
+      const head=t*e.speed,end=e.c[e.c.length-1];if(head-e.trail>end){if(e.done)after.push(e.done);return false}
       const h=Math.min(head,end),s0=Math.max(0,head-e.trail),n=14;
       for(let i=0;i<n;i++){const a0=lerp(s0,h,i/n),a1=lerp(s0,h,(i+1)/n);if(a1<=a0)continue;const p0=at(e.pts,e.c,a0),p1=at(e.pts,e.c,a1);fc.lineWidth=e.w;fc.strokeStyle=col(.9*(i+1)/n*(head>end?1-(head-end)/e.trail:1));fc.beginPath();fc.moveTo(...p0);fc.lineTo(...p1);fc.stroke()}
       if(head<=end){const hp=at(e.pts,e.c,head),g=fc.createRadialGradient(hp[0],hp[1],0,hp[0],hp[1],20);g.addColorStop(0,col(.95));g.addColorStop(.35,col(.5));g.addColorStop(1,col(0));fc.fillStyle=g;fc.beginPath();fc.arc(hp[0],hp[1],20,0,TAU);fc.fill()}
@@ -162,6 +162,7 @@ const FX=(()=>{
       e.nodes.forEach((q,i)=>{const since=head-e.c[i];if(since<0)return;const a=Math.max(0,1-since/(e.trail*2.2));if(a<=0)return;fc.fillStyle=col(.9*a);fc.beginPath();fc.arc(q[0],q[1],q[2]+3,0,TAU);fc.fill();fc.lineWidth=1.4;fc.strokeStyle=col(.6*a);fc.beginPath();fc.arc(q[0],q[1],q[2]+5+8*(1-a),0,TAU);fc.stroke()});
       return true});
     if(hover){fc.lineWidth=1.3;fc.strokeStyle=col(.85);fc.setLineDash([3,3]);fc.beginPath();fc.arc(hover.x,hover.y,hover.r,0,TAU);fc.stroke();fc.setLineDash([])}
+    after.forEach(f=>f());
     if(effects.length)kick()}
   function onFired(e){const c=e.cell;
     if(e.depth===0&&c.conn.length&&(e.user||R()<.5)){const k=c.conn[Math.floor(R()*c.conn.length)];
@@ -169,12 +170,36 @@ const FX=(()=>{
       travel(k.pts,e.side,{speed:.1,trail:150,w:2.4,done:()=>flow(k.node,e.side)})}
     else if(c.ax){travel(c.ax,e.side,{speed:.09,trail:90,w:2.2,done:()=>{if(e.depth<2&&c.to)fire(c.to,e.side,e.depth+1)}})}}
   function kick(){if(!raf&&visible)raf=requestAnimationFrame(step)}
-  const active=side=>effects.some(e=>e.side===side);
-  function idle(){idleT=0;if(!visible||document.hidden)return schedule();
-    if(!active('L')){const pool=CELLS.filter(c=>c.L===2&&c.m<.45&&c.c[0]>20&&c.c[1]>H*.06&&c.c[1]<H*.72&&c.s.length);if(pool.length)fire(pool[Math.floor(R()*pool.length)],'L')}
-    if(!active('R')){const pool=M.pts.filter(n=>n.sx>W*.6&&n.sx<W*.82&&n.sy>H*.08&&n.sy<H*.72&&n.z>-.4);if(pool.length)flow(pool[Math.floor(R()*pool.length)],'R')}
-    schedule()}
-  function schedule(){clearTimeout(idleT);idleT=setTimeout(idle,1400+Math.random()*1600)}
+  /* ---------- idle story: a slow three-part cycle, one part per research area ---------- */
+  const STORY=[['001','How people work with AI'],['002','How AI changes the mind'],['003','Aligning AI with human cognition']];
+  const cap=document.querySelector('.story'),capN=cap&&cap.querySelector('.n'),capT=cap&&cap.querySelector('.t');
+  let part=0,running=false;
+  function caption(i){if(!cap)return;cap.style.opacity=0;setTimeout(()=>{capN.textContent=STORY[i][0];capT.textContent=STORY[i][1];cap.style.opacity=1},450)}
+  const rev=a=>a.slice().reverse();
+  const fireThen=(cell,then)=>{fire(cell,'S');const e=effects[effects.length-1];if(e&&e.cell===cell)e.then=then;else then()};
+  const conn=(pts,then)=>travel(pts,'S',{speed:.1,trail:150,w:2.4,done:then});
+  const graph=(nodes,then)=>travel(nodes.map(n=>[n.sx,n.sy]),'S',{nodes:nodes.map(n=>[n.sx,n.sy,n.r||2]),speed:.075,trail:170,w:2.6,done:then});
+  function bfs(a,b){const ia=M.pts.indexOf(a),ib=M.pts.indexOf(b),prev=new Map([[ia,-1]]),q=[ia];
+    while(q.length){const i=q.shift();if(i===ib)break;for(const j of M.pts[i].e)if(!prev.has(j)){prev.set(j,i);q.push(j)}}
+    if(!prev.has(ib))return null;const path=[];for(let i=ib;i!==-1;i=prev.get(i))path.push(M.pts[i]);return path.reverse()}
+  const inView=c=>c.c[1]>H*.1&&c.c[1]<H*.78&&c.c[0]>20;
+  const pickCell=(min=1)=>{const pool=CELLS.filter(c=>c.L===2&&c.conn.length>=min&&inView(c));return pool[Math.floor(R()*pool.length)]};
+  function next(){running=false;part=(part+1)%3;clearTimeout(idleT);idleT=setTimeout(play,2200)}
+  function play(){idleT=0;if(!visible||document.hidden){idleT=setTimeout(play,1000);return}
+    if(running)return;running=true;caption(part);
+    // 001: a neuron fires, the spike leaves the brain along a connector, and flows on through the graph
+    if(part===0){const c=pickCell();if(!c)return next();const k=c.conn[Math.floor(R()*c.conn.length)];
+      fireThen(c,()=>conn(k.pts,()=>graph(walk(k.node,7),next)))}
+    // 002: information gathers in the graph, crosses back into the brain, and the neuron it reaches lights up
+    else if(part===1){const c=pickCell();if(!c)return next();const k=c.conn[Math.floor(R()*c.conn.length)];
+      graph(rev(walk(k.node,7)),()=>conn(rev(k.pts),()=>fireThen(c,next)))}
+    // 003: a loop. Out of one neuron, through the graph, and back into the brain, which answers
+    else{let a=pickCell(2),ka,kb,b,path=null;
+      if(a){ka=a.conn[0];kb=a.conn[1];b=a;path=bfs(ka.node,kb.node)}
+      if(!path){const pool=CELLS.filter(c=>c.L===2&&c.conn.length&&inView(c));for(let t=0;t<20&&!path;t++){a=pool[Math.floor(R()*pool.length)];b=pool[Math.floor(R()*pool.length)];if(!a||!b||a===b)continue;ka=a.conn[0];kb=b.conn[0];path=bfs(ka.node,kb.node)}}
+      if(!path)return next();
+      fireThen(a,()=>conn(ka.pts,()=>graph(path,()=>conn(rev(kb.pts),()=>fireThen(b,next)))))}}
+  function schedule(){if(!running&&!idleT)idleT=setTimeout(play,900)}
   function pick(ev){const r=cv.getBoundingClientRect(),x=ev.clientX-r.left,y=ev.clientY-r.top;let best=null,bd=1e9;
     for(const c of CELLS){if(c.L!==2)continue;const d=Math.hypot(c.c[0]-x,c.c[1]-y),lim=Math.max(c.r*2.2,16);if(d<lim&&d<bd){bd=d;best={k:'cell',cell:c,x:c.c[0],y:c.c[1],r:Math.max(c.r*2.2,12)}}}
     if(!best)for(const n of M.pts){if(n.z<-.4)continue;const d=Math.hypot(n.sx-x,n.sy-y);if(d<14&&d<bd){bd=d;best={k:'node',node:n,x:n.sx,y:n.sy,r:9}}}
