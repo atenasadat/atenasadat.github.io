@@ -132,38 +132,43 @@ const FX=(()=>{
   const cum=pts=>{const c=[0];for(let i=1;i<pts.length;i++)c.push(c[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]));return c};
   const at=(pts,c,d)=>{let i=1;while(i<c.length-1&&c[i]<d)i++;const t=clamp((d-c[i-1])/((c[i]-c[i-1])||1),0,1);return[lerp(pts[i-1][0],pts[i][0],t),lerp(pts[i-1][1],pts[i][1],t)]};
   const col=a=>`rgba(${AC},${clamp(a,0,1).toFixed(3)})`;
-  function reset(){effects=[];hover=null;running=false;clearTimeout(idleT);idleT=0;AC=getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim()||AC;
+  function reset(){effects=[];hover=null;running=false;lit={paths:[],nodes:[],cells:[]};fadeT0=0;clearTimeout(idleT);idleT=0;AC=getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim()||AC;
     fx.width=cv.width;fx.height=cv.height;fc.setTransform(DPR,0,0,DPR,0,0);fc.lineCap='round';fc.lineJoin='round';kick();schedule()}
   // a neuron fires: a wave of activity spreads from the soma out along its dendrites, then a spike runs down the axon
   function fire(cell,side,depth=0){if(!cell)return;const D=Math.max(...cell.s.flatMap(st=>st.pts.map(p=>Math.hypot(p[0]-cell.c[0],p[1]-cell.c[1]))),cell.r*3);
     effects.push({k:'fire',cell,D,t0:performance.now(),dur:3800,side,depth});kick()}
   // a signal travels along a polyline; lit nodes along the way
-  function travel(pts,side,opt={}){if(!pts||pts.length<2){if(opt.done)setTimeout(opt.done,0);return}const c=cum(pts);effects.push({k:'travel',pts,c,t0:performance.now(),speed:opt.speed||.32,trail:opt.trail||90,side,nodes:opt.nodes||[],done:opt.done,w:opt.w||1.6});kick()}
-  function walk(node,steps=11){const path=[node],seen=new Set([node]);let cur=node;
+  function travel(pts,side,opt={}){if(!pts||pts.length<2){if(opt.done)setTimeout(opt.done,0);return}const c=cum(pts);effects.push({k:'travel',pts,c,t0:performance.now(),speed:opt.speed||.32,trail:opt.trail||90,side,nodes:opt.nodes||[],keep:!!opt.keep,done:opt.done,w:opt.w||1.6});kick()}
+  function walk(node,steps=11,bias=.3){const path=[node],seen=new Set([node]);let cur=node;
     for(let i=0;i<steps;i++){const nb=cur.e.map(j=>M.pts[j]).filter(n=>!seen.has(n));if(!nb.length)break;
       // prefer moving away from the neurons, so information flows into the graph
-      nb.sort((a,b)=>(b.sx-a.sx)*.3+(R()-.5)*90);cur=nb[Math.floor(R()*Math.min(2,nb.length))];seen.add(cur);path.push(cur)}
+      nb.sort((a,b)=>(b.sx-a.sx)*bias+(R()-.5)*90);cur=nb[Math.floor(R()*Math.min(2,nb.length))];seen.add(cur);path.push(cur)}
     return path}
   function flow(node,side){const path=walk(node);travel(path.map(n=>[n.sx,n.sy]),side,{nodes:path.map(n=>[n.sx,n.sy,n.r||2]),speed:.075,trail:170,w:2.6})}
-  function step(){const now=performance.now();raf=0;fc.setTransform(1,0,0,1,0,0);fc.clearRect(0,0,fx.width,fx.height);fc.setTransform(DPR,0,0,DPR,0,0);
+  function drawLit(now){let A=1;if(fadeT0){A=1-(now-fadeT0)/900;if(A<=0){lit={paths:[],nodes:[],cells:[]};fadeT0=0;return}}
+    for(const c of lit.cells){const [x,y]=c.c;for(const st of c.s){fc.lineWidth=Math.max(1.6,st.w0*.85+.6);fc.strokeStyle=col(.5*A);fc.beginPath();st.pts.forEach((q,i)=>i?fc.lineTo(q[0],q[1]):fc.moveTo(q[0],q[1]));fc.stroke()}
+      const g=fc.createRadialGradient(x,y,0,x,y,c.r*3);g.addColorStop(0,col(.45*A));g.addColorStop(1,col(0));fc.fillStyle=g;fc.beginPath();fc.arc(x,y,c.r*3,0,TAU);fc.fill();fc.fillStyle=col(.9*A);fc.beginPath();fc.arc(x,y,c.r*.55,0,TAU);fc.fill()}
+    for(const q of lit.paths){fc.lineWidth=q.w;fc.strokeStyle=col(.85*A);fc.beginPath();q.pts.forEach((p,i)=>i?fc.lineTo(p[0],p[1]):fc.moveTo(p[0],p[1]));fc.stroke()}
+    for(const q of lit.nodes){fc.fillStyle=col(.9*A);fc.beginPath();fc.arc(q[0],q[1],q[2]+3,0,TAU);fc.fill();fc.lineWidth=1.4;fc.strokeStyle=col(.55*A);fc.beginPath();fc.arc(q[0],q[1],q[2]+7,0,TAU);fc.stroke()}}
+  function step(){const now=performance.now();raf=0;fc.setTransform(1,0,0,1,0,0);fc.clearRect(0,0,fx.width,fx.height);fc.setTransform(DPR,0,0,DPR,0,0);drawLit(now);
     const after=[];effects=effects.filter(e=>{const t=now-e.t0;
-      if(e.k==='fire'){const p=t/e.dur;if(p>=1){after.push(()=>e.then?e.then():onFired(e));return false}
+      if(e.k==='fire'){const p=t/e.dur;if(p>=1){if(e.keep)lit.cells.push(e.cell);after.push(()=>e.then?e.then():onFired(e));return false}
         const [x,y]=e.cell.c,front=p*e.D*1.1,band=Math.max(22,e.D*.18);
         const gr=e.cell.r*3,g=fc.createRadialGradient(x,y,0,x,y,gr);g.addColorStop(0,col(.6*(1-p*.8)));g.addColorStop(1,col(0));fc.fillStyle=g;fc.beginPath();fc.arc(x,y,gr,0,TAU);fc.fill();
         fc.fillStyle=col(.9*(1-p*.7));fc.beginPath();fc.arc(x,y,e.cell.r*.5,0,TAU);fc.fill();
         for(const st of e.cell.s){const P=st.pts;for(let i=0;i<P.length-1;i++){const d=Math.hypot(P[i][0]-x,P[i][1]-y),a=.95*Math.exp(-(((d-front)/band)**2))+(d<front?.35*(1-p):0);if(a<.03)continue;
           fc.lineWidth=Math.max(1.8,st.w0*.9+.9);fc.strokeStyle=col(a);fc.beginPath();fc.moveTo(P[i][0],P[i][1]);fc.lineTo(P[i+1][0],P[i+1][1]);fc.stroke()}}
         return true}
-      const head=t*e.speed,end=e.c[e.c.length-1];if(head-e.trail>end){if(e.done)after.push(e.done);return false}
-      const h=Math.min(head,end),s0=Math.max(0,head-e.trail),n=14;
-      for(let i=0;i<n;i++){const a0=lerp(s0,h,i/n),a1=lerp(s0,h,(i+1)/n);if(a1<=a0)continue;const p0=at(e.pts,e.c,a0),p1=at(e.pts,e.c,a1);fc.lineWidth=e.w;fc.strokeStyle=col(.9*(i+1)/n*(head>end?1-(head-end)/e.trail:1));fc.beginPath();fc.moveTo(...p0);fc.lineTo(...p1);fc.stroke()}
+      const head=t*e.speed,end=e.c[e.c.length-1];if(head-(e.keep?0:e.trail)>end){if(e.keep){lit.paths.push({pts:e.pts,w:e.w});lit.nodes.push(...e.nodes)}if(e.done)after.push(e.done);return false}
+      const h=Math.min(head,end),s0=e.keep?0:Math.max(0,head-e.trail),n=e.keep?Math.max(14,Math.ceil(h/6)):14;
+      for(let i=0;i<n;i++){const a0=lerp(s0,h,i/n),a1=lerp(s0,h,(i+1)/n);if(a1<=a0)continue;const p0=at(e.pts,e.c,a0),p1=at(e.pts,e.c,a1);fc.lineWidth=e.w;fc.strokeStyle=col(e.keep?.85:.9*(i+1)/n*(head>end?1-(head-end)/e.trail:1));fc.beginPath();fc.moveTo(...p0);fc.lineTo(...p1);fc.stroke()}
       if(head<=end){const hp=at(e.pts,e.c,head),g=fc.createRadialGradient(hp[0],hp[1],0,hp[0],hp[1],20);g.addColorStop(0,col(.95));g.addColorStop(.35,col(.5));g.addColorStop(1,col(0));fc.fillStyle=g;fc.beginPath();fc.arc(hp[0],hp[1],20,0,TAU);fc.fill()}
       // nodes light up as the signal reaches them, then fade
-      e.nodes.forEach((q,i)=>{const since=head-e.c[i];if(since<0)return;const a=Math.max(0,1-since/(e.trail*2.2));if(a<=0)return;fc.fillStyle=col(.9*a);fc.beginPath();fc.arc(q[0],q[1],q[2]+3,0,TAU);fc.fill();fc.lineWidth=1.4;fc.strokeStyle=col(.6*a);fc.beginPath();fc.arc(q[0],q[1],q[2]+5+8*(1-a),0,TAU);fc.stroke()});
+      e.nodes.forEach((q,i)=>{const since=head-e.c[i];if(since<0)return;const a=e.keep?1:Math.max(0,1-since/(e.trail*2.2));if(a<=0)return;fc.fillStyle=col(.9*a);fc.beginPath();fc.arc(q[0],q[1],q[2]+3,0,TAU);fc.fill();fc.lineWidth=1.4;fc.strokeStyle=col(.6*a);fc.beginPath();fc.arc(q[0],q[1],q[2]+5+8*(1-a),0,TAU);fc.stroke()});
       return true});
     if(hover){fc.lineWidth=1.3;fc.strokeStyle=col(.85);fc.setLineDash([3,3]);fc.beginPath();fc.arc(hover.x,hover.y,hover.r,0,TAU);fc.stroke();fc.setLineDash([])}
     after.forEach(f=>f());
-    if(effects.length)kick()}
+    if(effects.length||fadeT0)kick()}
   function onFired(e){const c=e.cell;
     if(e.depth===0&&c.conn.length&&(e.user||R()<.5)){const k=c.conn[Math.floor(R()*c.conn.length)];
       // the spike leaves the brain, becomes a trace, and continues as information flow in the graph
@@ -173,30 +178,33 @@ const FX=(()=>{
   /* ---------- idle story: a slow three-part cycle, one part per research area ---------- */
   const STORY=[['001','How people work with AI'],['002','How AI changes the mind'],['003','Aligning AI with human cognition']];
   const cap=document.querySelector('.story'),capN=cap&&cap.querySelector('.n'),capT=cap&&cap.querySelector('.t');
-  let part=0,running=false;
+  let part=0,running=false,lit={paths:[],nodes:[],cells:[]},fadeT0=0;
   function caption(i){if(!cap)return;cap.style.opacity=0;setTimeout(()=>{capN.textContent=STORY[i][0];capT.textContent=STORY[i][1];cap.style.opacity=1},450)}
   const rev=a=>a.slice().reverse();
-  const fireThen=(cell,then)=>{fire(cell,'S');const e=effects[effects.length-1];if(e&&e.cell===cell)e.then=then;else then()};
-  const conn=(pts,then)=>travel(pts,'S',{speed:.1,trail:150,w:2.4,done:then});
-  const graph=(nodes,then)=>travel(nodes.map(n=>[n.sx,n.sy]),'S',{nodes:nodes.map(n=>[n.sx,n.sy,n.r||2]),speed:.075,trail:170,w:2.6,done:then});
+  const fireThen=(cell,then)=>{fire(cell,'S');const e=effects[effects.length-1];if(e&&e.cell===cell){e.then=then;e.keep=true}else then()};
+  const conn=(pts,then)=>travel(pts,'S',{speed:.12,trail:150,w:2.4,keep:true,done:then});
+  const graph=(nodes,then)=>travel(nodes.map(n=>[n.sx,n.sy]),'S',{nodes:nodes.map(n=>[n.sx,n.sy,n.r||2]),speed:.09,trail:170,w:2.6,keep:true,done:then});
   function bfs(a,b){const ia=M.pts.indexOf(a),ib=M.pts.indexOf(b),prev=new Map([[ia,-1]]),q=[ia];
     while(q.length){const i=q.shift();if(i===ib)break;for(const j of M.pts[i].e)if(!prev.has(j)){prev.set(j,i);q.push(j)}}
     if(!prev.has(ib))return null;const path=[];for(let i=ib;i!==-1;i=prev.get(i))path.push(M.pts[i]);return path.reverse()}
-  const inView=c=>c.c[1]>H*.1&&c.c[1]<H*.78&&c.c[0]>20;
+  // a walk into the graph; if heading right dead-ends early, wander in any direction instead
+  const deep=n=>{let w=walk(n,8,1.2);for(let t=0;t<4&&w.length<5;t++){const v=walk(n,8,0);if(v.length>w.length)w=v}return w};
+  const inView=c=>c.c[1]>H*.22&&c.c[1]<H*.72&&c.c[0]>20;
   const pickCell=(min=1)=>{const pool=CELLS.filter(c=>c.L===2&&c.conn.length>=min&&inView(c));return pool[Math.floor(R()*pool.length)]};
-  function next(){running=false;part=(part+1)%3;clearTimeout(idleT);idleT=setTimeout(play,2200)}
+  function next(){clearTimeout(idleT);idleT=setTimeout(()=>{fadeT0=performance.now();kick();idleT=setTimeout(()=>{running=false;part=(part+1)%3;play()},1300)},4500)}
   function play(){idleT=0;if(!visible||document.hidden){idleT=setTimeout(play,1000);return}
     if(running)return;running=true;caption(part);
     // 001: a neuron fires, the spike leaves the brain along a connector, and flows on through the graph
     if(part===0){const c=pickCell();if(!c)return next();const k=c.conn[Math.floor(R()*c.conn.length)];
-      fireThen(c,()=>conn(k.pts,()=>graph(walk(k.node,7),next)))}
+      fireThen(c,()=>conn(k.pts,()=>graph(deep(k.node),next)))}
     // 002: information gathers in the graph, crosses back into the brain, and the neuron it reaches lights up
     else if(part===1){const c=pickCell();if(!c)return next();const k=c.conn[Math.floor(R()*c.conn.length)];
-      graph(rev(walk(k.node,7)),()=>conn(rev(k.pts),()=>fireThen(c,next)))}
+      graph(rev(deep(k.node)),()=>conn(rev(k.pts),()=>fireThen(c,next)))}
     // 003: a loop. Out of one neuron, through the graph, and back into the brain, which answers
     else{let a=pickCell(2),ka,kb,b,path=null;
       if(a){ka=a.conn[0];kb=a.conn[1];b=a;path=bfs(ka.node,kb.node)}
       if(!path){const pool=CELLS.filter(c=>c.L===2&&c.conn.length&&inView(c));for(let t=0;t<20&&!path;t++){a=pool[Math.floor(R()*pool.length)];b=pool[Math.floor(R()*pool.length)];if(!a||!b||a===b)continue;ka=a.conn[0];kb=b.conn[0];path=bfs(ka.node,kb.node)}}
+      if(path){const out=deep(ka.node).slice(0,6),back=bfs(out[out.length-1],kb.node);if(back&&back.length>2)path=out.concat(back.slice(1))}
       if(!path)return next();
       fireThen(a,()=>conn(ka.pts,()=>graph(path,()=>conn(rev(kb.pts),()=>fireThen(b,next)))))}}
   function schedule(){if(!running&&!idleT)idleT=setTimeout(play,900)}
