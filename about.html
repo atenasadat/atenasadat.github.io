@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>About · Athena Saghi</title>
+<meta name="description" content="Education, experience, publications and contact for Athena Saghi, PhD student in Computer Science at USC.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Baskervville:ital@0;1&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+/* About: a short statement, then resume sections as label-left / content-right rows. */
+.lead{padding:clamp(40px,7vw,90px) 0 clamp(40px,6vw,72px);display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:end}
+.lead h1{margin:0 0 18px;font-weight:300;font-size:clamp(40px,6vw,72px);letter-spacing:-.02em;line-height:1}
+.lead p{margin:0 0 14px;font-size:clamp(18px,1.7vw,21px);max-width:34em}
+.lead .card{border:1px solid var(--line);padding:18px 20px;display:grid;gap:12px;font-size:15px;color:var(--soft)}
+.lead .card .num{display:block}
+.links{display:flex;flex-wrap:wrap;gap:8px}
+.row{display:grid;grid-template-columns:200px minmax(0,1fr);gap:clamp(20px,4vw,56px);padding:clamp(28px,4vw,44px) 0;border-top:1px solid var(--line)}
+.row>h2{margin:0;font-weight:400;font-size:20px;letter-spacing:-.005em}
+.row>h2 .num{display:block;margin-bottom:4px}
+.tl{list-style:none;margin:0;padding:0;display:grid;gap:22px}
+.tl>li{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px}
+.tl .when{font-family:var(--mono);font-size:12.5px;color:var(--faint);padding-top:3px}
+.tl b{font-weight:500;display:block}
+.tl .where{color:var(--soft);font-size:15px}
+.tl ul{margin:8px 0 0;padding-left:18px;color:var(--soft);font-size:15px;display:grid;gap:4px}
+.pubs{display:grid;gap:18px}
+.sub{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);margin:10px 0 -4px}
+.pub{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px}
+.pub .ven{font-family:var(--mono);font-size:12.5px;padding-top:3px}
+.pub .ti{font-size:17px;line-height:1.4}
+.pub .au{font-size:14px;color:var(--soft)}
+.pub .au b{font-weight:500;color:var(--ink)}
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:22px}
+.skills h3{margin:0 0 6px;font-weight:500;font-size:15px}
+.skills p{margin:0;font-size:15px;color:var(--soft)}
+.contact{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.contact code{font-family:var(--mono);font-size:clamp(18px,2vw,24px)}
+@media (max-width:820px){.lead,.row{grid-template-columns:1fr}.tl li,.pub{grid-template-columns:1fr;gap:2px}}
+</style>
+</head>
+<body>
+<div class="wash" aria-hidden="true"></div><div class="grain" aria-hidden="true"></div>
+<nav class="site-nav wrap" aria-label="Site">
+  <a class="home" href="index.html">Athena Saghi</a>
+  <a class="mid" href="projects.html">Projects</a>
+  <span class="right"><a href="about.html" aria-current="page">About</a></span>
+</nav>
+
+<main class="wrap">
+  <section class="lead">
+    <div>
+      <h1>Zeinabsadat (Athena) Saghi</h1>
+      <p>I am a PhD student in Computer Science at the University of Southern California, advised by Prof. Souti Chattopadhyay in the Adaptive Computing (ACE) Lab.</p>
+      <p>My work sits between neuroscience, cognitive science and HCI. I study how people work with AI, how AI changes the way they think, and how to build AI that adapts to the person using it.</p>
+    </div>
+    <div class="card">
+      <div><span class="num">Interests</span>Human-centered AI, physiological sensing (EEG), affective computing, human-in-the-loop and agentic AI, computational cognitive modeling, evaluation of human–AI interaction.</div>
+      <div class="links"><a class="pill" href="#contact">Contact</a><a class="pill" href="#" data-todo title="Link coming soon">CV</a><a class="pill" href="#" data-todo title="Link coming soon">Scholar</a><a class="pill" href="#" data-todo title="Link coming soon">LinkedIn</a><a class="pill" href="#" data-todo title="Link coming soon">GitHub</a></div>
+    </div>
+  </section>
+
+  <section class="row reveal" id="education">
+    <h2><span class="num">01</span>Education</h2>
+    <ol class="tl">
+      <li><span class="when">2023 – 2028</span><div><b>Ph.D. in Computer Science</b><span class="where">University of Southern California · expected May 2028 · advisor Prof. Souti Chattopadhyay</span></div></li>
+      <li><span class="when">2023 – 2025</span><div><b>M.S. in Computer Science</b><span class="where">University of Southern California</span></div></li>
+      <li><span class="when">2017 – 2022</span><div><b>B.S. in Computer Engineering</b><span class="where">Sharif University of Technology, Tehran</span></div></li>
+    </ol>
+  </section>
+
+  <section class="row reveal" id="experience">
+    <h2><span class="num">02</span>Experience</h2>
+    <ol class="tl">
+      <li><span class="when">2023 – now</span><div><b>Research Assistant, ACE Lab</b><span class="where">University of Southern California</span>
+        <ul><li>EEG modeling of cognitive fatigue with a fractional dynamical networks framework, 93.33% accuracy and 0.95 AUROC.</li>
+        <li>Within-subject EEG studies of how generative AI changes brain connectivity during creative work.</li>
+        <li>Cognitive-aware shared autonomy as a multi-agent POMDP, evaluated in semi-autonomous driving.</li>
+        <li>Real-time agents that listen to think-aloud speech and nudge writers at reasoning gaps.</li>
+        <li>Mixed-methods studies of critical thinking, cognitive load and bias in LLM-assisted work.</li></ul></div></li>
+      <li><span class="when">2022 – 2023</span><div><b>Graduate Research Assistant, Motion Capture Lab</b><span class="where">UC Davis</span>
+        <ul><li>Built a Unity VR application for Meta Quest 2 to study autonomous pedagogical agents in distance STEM learning.</li></ul></div></li>
+      <li><span class="when">2021 – 2022</span><div><b>Research Assistant, Data Science and Machine Learning Lab</b><span class="where">Sharif University of Technology</span>
+        <ul><li>RNNs and attention-based autoencoders for EEG representation learning, fused with gaze estimation for attention prediction.</li></ul></div></li>
+      <li><span class="when">2020 – 2022</span><div><b>R&amp;D Intern</b><span class="where">CommaMed</span>
+        <ul><li>PyTorch models for medical image segmentation and classification, from preprocessing to evaluation.</li></ul></div></li>
+    </ol>
+  </section>
+
+  <section class="row reveal" id="publications">
+    <h2><span class="num">03</span>Publications</h2>
+    <div class="pubs">
+      <div class="sub">Peer-reviewed</div>
+      <div class="pub"><span class="ven">ICSE 2026</span><div><div class="ti">Cognitive biases in LLM-assisted software development</div><div class="au"><b>Saghi, Z.</b>, Zhou, X., Sabouri, S., Pandita, R., McGuire, M., &amp; Chattopadhyay, S.</div></div></div>
+      <div class="pub"><span class="ven">UIST 2025</span><div><div class="ti">Beyond the page: Enriching academic paper reading with social media discussions</div><div class="au">Huang, R., Zhao, A. K., <b>Saghi, Z.</b>, Sabouri, S., &amp; Chattopadhyay, S.</div></div></div>
+      <div class="pub"><span class="ven">ICSE 2025</span><div><div class="ti">Code today, deadline tomorrow: Procrastination among software developers</div><div class="au"><b>Saghi, Z.</b>, Zimmermann, T., &amp; Chattopadhyay, S.</div></div></div>
+      <div class="sub">Under review or revision</div>
+      <div class="pub"><span class="ven">IEEE JBHI</span><div><div class="ti">Non-Markovian dynamical systems modeling of EEG-based brain activity for predicting cognitive fatigue level</div><div class="au"><b>Saghi, Z.</b>, Riabukhina, D., Akinbami, O., Bogdan, P., &amp; Chattopadhyay, S.</div></div></div>
+      <div class="pub"><span class="ven">Under review</span><div><div class="ti">Surfacing latent reasoning gaps: Contextualized nudges from think-aloud in AI-assisted writing</div><div class="au"><b>Saghi, Z.</b>, Sanidhya, S., Jiang, H., &amp; Chattopadhyay, S.</div></div></div>
+      <div class="pub"><span class="ven">Under review</span><div><div class="ti">“Do as I say, not as I code?” How developers’ mental models of AI diverge from their practice</div><div class="au"><b>Saghi, Z.</b>, &amp; Chattopadhyay, S.</div></div></div>
+      <div class="pub"><span class="ven">Under revision</span><div><div class="ti">“Like taking the path of least resistance”: Exploring the impact of LLM interaction on the creative process of programming</div><div class="au"><b>Saghi, Z.</b>, Huang, R., &amp; Chattopadhyay, S.</div></div></div>
+      <div class="pub"><span class="ven">Under review</span><div><div class="ti">Auditing and controlling AI agent actions in spreadsheets</div><div class="au">Sabouri, S., <b>Saghi, Z.</b>, Huang, R., Maladi, S., Eufracio, E., Gulwani, S., &amp; Chattopadhyay, S.</div></div></div>
+    </div>
+  </section>
+
+  <section class="row reveal" id="skills">
+    <h2><span class="num">04</span>Skills</h2>
+    <div class="skills">
+      <div><h3>Multimodal &amp; physiological ML</h3><p>Time-series modeling, representation learning, transfer learning, sensor fusion across EEG, gaze, audio, video and behaviour, biosignal processing.</p></div>
+      <div><h3>AI frameworks</h3><p>PyTorch, TensorFlow, SciPy, NumPy, GPU training and evaluation, LLM-based agentic pipelines.</p></div>
+      <div><h3>Sensing &amp; immersive systems</h3><p>DSI-24 wearable EEG acquisition, Unity VR design for Meta Quest 2.</p></div>
+      <div><h3>Human-centered research</h3><p>Experimental design, within-subject and controlled studies, interviews, focus groups, think-aloud, usability testing, thematic analysis, mixed methods.</p></div>
+      <div><h3>Statistics &amp; languages</h3><p>SEM, HLM, ANOVA, hypothesis testing. Python, MATLAB, R, Java, SQL.</p></div>
+    </div>
+  </section>
+
+  <section class="row reveal" id="contact">
+    <h2><span class="num">05</span>Contact</h2>
+    <div class="contact"><code>saghi@usc.edu</code><button class="pill" type="button" data-copy="saghi@usc.edu">Copy email</button><a class="pill" href="mailto:saghi@usc.edu">Write</a></div>
+  </section>
+
+  <footer class="site-foot"><span>© 2026 Athena Saghi</span><span>Last updated: October 19, 2026</span></footer>
+</main>
+<script src="assets/site.js"></script>
+<script>document.querySelectorAll('[data-todo]').forEach(a=>a.addEventListener('click',e=>e.preventDefault()))</script>
+</body>
+</html>

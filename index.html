@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Athena Saghi</title>
+<meta name="description" content="Athena Saghi, PhD student at USC, studies how people work with AI, how AI changes the human mind, and how to align the two.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Baskervville:ital@0;1&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+/* Home: full-bleed drawing as the hero, then the statement, the bio, and three numbered research directions. */
+.hero{position:relative;min-height:max(620px,100svh);display:grid;grid-template-rows:auto 1fr auto;overflow:hidden}
+#hero-cv,#hero-fx{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;
+  /* the drawing dissolves into the page instead of ending at a hard edge */
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 90px,#000 62%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 90px,#000 62%,transparent 100%)}
+#hero-cv{opacity:.55}
+/* a soft band of paper behind the nav so its links stay readable over the drawing */
+.hero::before{content:"";position:absolute;left:0;right:0;top:0;height:130px;z-index:1;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(250,248,244,.95) 0,rgba(250,248,244,.8) 45%,rgba(250,248,244,0) 100%)}
+.hero .site-nav a{color:var(--ink);font-weight:400}
+
+.hero .site-nav{width:100%}
+.hero-name{position:relative;z-index:2;grid-row:3;justify-self:center;display:grid;justify-items:center;gap:14px;padding:0 16px 56px;text-align:center}
+.hero-name::before{content:"";position:absolute;inset:-70px -160px -10px;z-index:-1;background:radial-gradient(closest-side,rgba(250,248,244,.9),rgba(250,248,244,.55) 55%,transparent);pointer-events:none}
+.hero-name h1{margin:0;font-weight:400;font-size:clamp(28px,3vw,36px);letter-spacing:-.005em}
+
+.statement{font-size:clamp(34px,5.4vw,68px);line-height:1.08;letter-spacing:-.02em;font-weight:300;margin:0 0 clamp(40px,6vw,72px);max-width:17em}
+.statement b{font-weight:300;font-family:var(--mono);font-size:.7em;vertical-align:.12em;padding:0 .15em}
+.bio{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.7fr);gap:clamp(24px,5vw,72px);align-items:start}
+.bio .tag{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);padding-top:10px}
+.bio p{margin:0 0 18px;font-size:clamp(19px,1.8vw,23px);line-height:1.55;max-width:34em}
+.bio .role{font-weight:400}
+.bio .aff{font-size:17px;color:var(--soft)}
+
+.ap{display:grid;grid-template-columns:110px minmax(0,1fr) minmax(0,1fr);gap:clamp(20px,4vw,56px);padding:clamp(32px,5vw,52px) 0;border-top:1px solid var(--line)}
+.ap:last-of-type{border-bottom:1px solid var(--line)}
+.ap .n{font-family:var(--mono);font-size:clamp(28px,3vw,40px);font-weight:400;color:var(--faint);line-height:1}
+.ap h3{margin:0 0 14px;font-weight:400;font-size:clamp(24px,2.6vw,32px);line-height:1.15;letter-spacing:-.01em}
+.ap p{margin:0;color:var(--soft)}
+.ap ul{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.ap li{font-family:var(--serif);font-style:italic;font-size:19px;line-height:1.45;padding-left:28px;position:relative}
+.ap li::before{content:"↳";position:absolute;left:0;top:0;font-style:normal;font-family:var(--mono);font-size:15px;color:var(--faint)}
+.ap .refs{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.ap .refs a{font-size:12px;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:3px 11px;color:var(--soft)}
+.ap .refs a:hover{color:var(--ink);border-color:var(--ink)}
+.more{display:flex;justify-content:center;margin-top:clamp(40px,6vw,64px)}
+@media (max-width:820px){.ap{grid-template-columns:1fr}.bio{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wash" aria-hidden="true"></div><div class="grain" aria-hidden="true"></div>
+
+<header class="hero">
+  <canvas id="hero-cv" aria-hidden="true"></canvas><canvas id="hero-fx" aria-hidden="true"></canvas>
+  <nav class="site-nav wrap" aria-label="Site">
+    <a class="home" href="index.html" aria-current="page">Athena Saghi</a>
+    <a class="mid" href="projects.html">Projects</a>
+    <span class="right"><a href="about.html">About</a></span>
+  </nav>
+  <div class="hero-name">
+    <h1>Athena Saghi</h1>
+    <a class="pill" href="#about">Learn more <span aria-hidden="true">↓</span></a>
+  </div>
+</header>
+
+<main>
+  <section class="sec wrap" id="about">
+    <p class="statement reveal">Understand how AI changes the way we think <b>+</b> build AI that fits how we think</p>
+    <div class="bio reveal">
+      <div class="tag">About</div>
+      <div>
+        <p>Athena Saghi is a <span class="mark role">Human-Centered AI Researcher</span> working where cognitive science, artificial intelligence and human–computer interaction (HCI) meet. She studies what happens to people’s judgment, creativity and biases when they work with large language models. She also builds systems that read a person’s cognitive state, from think-aloud speech to EEG, and adapt to it in real time.</p>
+        <p class="aff">She is a PhD student in Computer Science at the University of Southern California, in the Adaptive Computing (ACE) Lab, advised by Prof. Souti Chattopadhyay.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec wrap" id="research" style="padding-top:0">
+    <div class="sec-head reveal"><h2>Research Approach</h2><span>three questions</span></div>
+
+    <article class="ap reveal">
+      <div class="n">001</div>
+      <div><h3>How people work with AI</h3>
+        <p>I watch people do real work with AI, such as programming, writing and reading research, and measure what changes in how they reason. Mixed-methods studies show where trust, bias and habit enter the loop, and turn that into requirements for better tools.</p>
+        <div class="refs"><a href="projects.html#biases">Cognitive biases · ICSE 2026</a><a href="projects.html#mentalmodels">Mental models of AI</a><a href="projects.html#paperreading">Paper reading · UIST 2025</a><a href="projects.html#spreadsheets">Agents in spreadsheets</a></div></div>
+      <ul><li>Do LLM assistants make developers’ cognitive biases louder?</li><li>Why do developers say one thing about AI and do another?</li></ul>
+    </article>
+
+    <article class="ap reveal">
+      <div class="n">002</div>
+      <div><h3>How AI changes the mind</h3>
+        <p>Working with AI does not only change the output. It changes the person producing it. I study that change at two levels: in behaviour, through the creative process, and in the brain, through EEG measures of connectivity and creative flow.</p>
+        <div class="refs"><a href="projects.html#creativecode">Creative programming</a><a href="projects.html#genai">Generative AI &amp; the brain</a><a href="projects.html#flow">Creative flow</a></div></div>
+      <ul><li>Does autocomplete pull programmers onto the path of least resistance?</li><li>Does working with generative AI change how the brain connects during creative work?</li></ul>
+    </article>
+
+    <article class="ap reveal">
+      <div class="n">003</div>
+      <div><h3>Aligning AI with human cognition</h3>
+        <p>If AI changes how we think, it should also know how we are thinking. I build systems that sense a person’s state, through speech, physiology and behaviour, and decide when and how to step in, so the AI fits the person instead of the other way around.</p>
+        <div class="refs"><a href="projects.html#thinkaloud">Think-aloud nudges</a><a href="projects.html#fatigue">Cognitive fatigue from EEG</a><a href="projects.html#autonomy">Shared autonomy</a><a href="projects.html#engagement">Engagement sensing</a></div></div>
+      <ul><li>Can an agent hear the gap in someone’s reasoning and nudge at the right moment?</li><li>Can EEG tell a system that a person is too fatigued to keep going?</li></ul>
+    </article>
+
+    <div class="more reveal"><a class="pill" href="projects.html">View all projects <span aria-hidden="true">→</span></a></div>
+  </section>
+
+  <footer class="site-foot wrap"><span>© 2026 Athena Saghi</span><span>Last updated: October 19, 2026</span></footer>
+</main>
+
+<script src="assets/site.js"></script>
+<script src="assets/hero.js"></script>
+</body>
+</html>
